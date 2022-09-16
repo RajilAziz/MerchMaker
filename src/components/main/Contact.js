@@ -5,17 +5,18 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { Button, TextareaAutosize, TextField } from "@mui/material";
 import { Formik } from "formik";
 import Swal from "sweetalert2";
+import "./Contact.css";
 // import * as Yup from 'yup';
 const Contact = () => {
   const contactform = {
-    Name: "",
+    name: "",
     email: "",
     subject: "",
     message: "",
   };
 
-  const contactSubmit = (formdata) => {
-    fetch("http://localhost:5000/users/authenticate", {
+  const contactSubmit = (formdata , {resetForm}) => {
+    fetch("http://localhost:5000/contact/add", {
       method: "POST",
       body: JSON.stringify(formdata), //convert javascript to json
       headers: {
@@ -36,7 +37,12 @@ const Contact = () => {
 
             sessionStorage.setItem("user", JSON.stringify(data));
           });
-        } else if (res.status === 400) {
+
+          resetForm()
+
+        } 
+        
+        else if (res.status === 400) {
           Swal.fire({
             icon: "error",
             title: "Error",
@@ -57,17 +63,16 @@ const Contact = () => {
   //   email: Yup.string().email('Invalid email').required('Required'),
   //   password: Yup.string().required('Required')
   //   .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'),
-    
+
   // });
   return (
-
-    <section id="contact" class="contact" style={{marginTop:"5%"}}>
+    <section id="contact" class="contact" style={{ marginTop: "4%" }}>
       <div class="container" data-aos="fade-up">
-        <div class="card">
+        <div class="card" id="card">
           <div class="card-body">
             <div class="section-title">
-              <h2>Contact</h2>
-              <p>Contact Us</p>
+              <h2 class="title">Contact</h2>
+              <p class="paragraphtitle">Contact Us</p>
             </div>
             <div class="row" data-aos="fade-up" data-aos-delay="100">
               <div class="col-lg-6">
@@ -75,40 +80,64 @@ const Contact = () => {
                   <div class="col-md-12">
                     <div class="card">
                       <div class="card-body">
-                        <div class="info-box">
-                          <LocationOnOutlinedIcon/>
-                          <h3>Our Address</h3>
-                          <p>A108 Adam Street, New York, NY 535022</p>
+                        <div class="info-box mt-3">
+                          <div class="address">
+                            <i>
+                              <LocationOnOutlinedIcon />
+                            </i>
+                            <h3 class="contactheading">Our Address</h3>
+                            <p class="addressparagraph">
+                              A108 Adam Street, New York, NY 535022
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="card " style={{marginTop:"9%"}}>
+                    <div class="card " style={{ marginTop: "9%" }}>
                       <div class="card-body">
                         <div class="info-box mt-3">
-                          <EmailOutlinedIcon  />
-                          <h3>Email Us</h3>
-                          <p>
-                            info@example.com
-                            <br />
-                            contact@example.com
-                          </p>
+                          <div class="email">
+                            <i>
+                              <EmailOutlinedIcon />
+                            </i>
+                            <h3
+                              class="contactheading"
+                              style={{ paddingTop: "10%" }}
+                            >
+                              Email Us
+                            </h3>
+                            <p class="addressparagraph">
+                              info@example.com
+                              <br />
+                              contact@example.com
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="card "style={{marginTop:"9%"}}>
+                    <div class="card " style={{ marginTop: "9%" }}>
                       <div class="card-body">
                         <div class="info-box mt-3">
-                          <PhoneInTalkOutlinedIcon />
-                          <h3>Call Us</h3>
-                          <p>
-                            +1 5589 55488 55
-                            <br />
-                            +1 6678 254445 41
-                          </p>
+                          <div class="phone">
+                            <i>
+                              <PhoneInTalkOutlinedIcon />
+                            </i>
+                            <h3
+                              class="contactheading"
+                              style={{ paddingTop: "10%" }}
+                            >
+                              Call Us
+                            </h3>
+                            <p class="addressparagraph">
+                              +1 5589 55488 55
+                              <br />
+                              +1 6678 254445 41
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -191,9 +220,10 @@ const Contact = () => {
                       }) => (
                         <form onSubmit={handleSubmit}>
                           <TextField
+                            
                             label="Your Name"
                             variant="outlined"
-                            className="w-100 mb-3"
+                            className="w-100 mb-4"
                             id="username" // name can also used
                             onChange={handleChange}
                             value={values.username} // value passed above
@@ -203,7 +233,7 @@ const Contact = () => {
                           <TextField
                             label="Your Email"
                             variant="outlined"
-                            className="w-100 mb-3"
+                            className="w-100 mb-4"
                             id="email"
                             onChange={handleChange}
                             value={values.email}
@@ -213,8 +243,8 @@ const Contact = () => {
                           <TextField
                             label="Subject"
                             variant="outlined"
-                            className="w-100 mb-3"
-                            // id="password"
+                            className="w-100 mb-4"
+                            id="subject"
                             type="subject"
                             onChange={handleChange}
                             value={values.subject}
@@ -233,11 +263,14 @@ const Contact = () => {
                             error={Boolean(errors.message && touched.message)}
                           />
 
-                          <Button type="submit" variant="contained">
+
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            style={{ width: "100%", marginBottom: "2%" }}
+                          >
                             Send Message
                           </Button>
-
-                       
                         </form>
                       )}
                     </Formik>

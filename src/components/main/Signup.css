@@ -1,0 +1,14 @@
+.login-bg {
+  background-image: url("https://img.freepik.com/premium-psd/woman-with-tote-bag-mockup_53876-142744.jpg?w=740");
+  background-size: cover;
+  background-position: bottom;
+  height: 100%;
+  
+}
+
+#loginpage{
+  display: flex;
+  flex-direction: row;
+  
+  justify-content: center;
+}

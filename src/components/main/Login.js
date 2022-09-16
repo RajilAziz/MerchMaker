@@ -1,10 +1,60 @@
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
-import * as Yup from 'yup';
+import * as Yup from "yup";
+import app_config from "../../config";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityoffIcon from "@mui/icons-material/VisibilityOff";
+import PersonIcon from '@mui/icons-material/Person';
+import "./Login.css"
 
 const Login = () => {
+
+
+  
+  // const [passwordType, setPasswordType] = useState("password")
+  // const [passwordInput, setPasswordInput] = useState("")
+  //  const handlePasswordChange=(e)=>{
+  //   setPasswordInput(e.target.value);
+  //  }
+
+  //  const togglePassword=()=>{
+  //   if (password==="password")
+  //   {
+  //     setPasswordType("text")
+  //     return
+  //   }
+  //   setPasswordType("password")
+  //  }
+
+  const [passwordType, setPasswordType] = useState("password");
+  const [passwordInput, setPasswordInput] = useState("");
+  const handlePasswordChange = (evnt) => {
+    setPasswordInput(evnt.target.value);
+  };
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text");
+      return;
+    }
+    setPasswordType("password");
+  };
+
+  // const [values, setValues] = useState({
+  //   email: "",
+  //   pass: "",
+  //   showPass: false,
+  // });
+
+  // const handlePassVisibility = () => {
+  //   setValues({
+  //     ...values,
+  //     showPass: !values.showPass,
+  //   });
+  // };
+
+  const url = app_config.backend_url;
   const loginform = {
     email: "",
     password: "",
@@ -12,7 +62,7 @@ const Login = () => {
 
   const loginSubmit = (formdata) => {
     console.log("submit");
-    fetch("http://localhost:5000/users/authenticate", {
+    fetch(url + "/users/authenticate", {
       method: "POST",
       body: JSON.stringify(formdata), //convert javascript to json
       headers: {
@@ -44,19 +94,22 @@ const Login = () => {
 
   const formSchema = Yup.object().shape({
     username: Yup.string()
-      .min(2, 'Too Short Username!')
-      .max(5, 'Too Long Username!')
-      .required('Username is Required'),
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().required('Required')
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'),
-    
+      .min(2, "Too Short Username!")
+      .max(5, "Too Long Username!")
+      .required("Username is Required"),
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string()
+      .required("Required")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+      ),
   });
 
   return (
-    <div className="login-bg">
+    <div className="section" style={{ marginTop: "8%", marginBottom: "10%" }}>
       <div className="col-md-4 col-sm-6 mx-auto my-auto">
-        <div className="card">
+        <div className="card " id="card">
           <div className="card-body">
             {/* <img
               style={{  }}
@@ -72,30 +125,63 @@ const Login = () => {
                 backgroundPosition: "center",
               }}
             ></div> */}
-            <h3 className="mt-5 mb-5">Login Here</h3>
+            <h3 className="mt-4 mb-4" id="login">
+              Login Here
+            </h3>
 
-            <Formik initialValues={loginform} onSubmit={loginSubmit} validationSchema={formSchema}>
+            <Formik
+              initialValues={loginform}
+              onSubmit={loginSubmit}
+              validationSchema={formSchema}
+            >
               {({ values, handleChange, handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
-                  <div className="form-floating mt-3">
-                    <input
-                      className="form-control"
-                      placeholder="Email"
-                      id="email"
-                      value={values.email}
-                      onChange={handleChange}
-                    />
-                    <label>Email</label>
-                  </div>
+                  <TextField
+                    variant="standard"
+                    className="w-100 mt-3"
+                    label="Username"
+                    type="username"
+                    id="username"
+                    value={values.username}
+                    onChange={handleChange}
+                    
+                    
+                    InputProps={{
+                      endAdornment:(
+                        <InputAdornment position="end">
+                          <IconButton edge="end">
+                            <PersonIcon/>
+                            </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
 
                   <TextField
-                    variant="outlined"
+                    variant="standard"
                     className="w-100 mt-3"
                     label="Password"
-                    type="password"
+                    type={passwordType}
                     id="password"
-                    value={values.password}
-                    onChange={handleChange}
+                    value={passwordInput}
+                    onChange={handlePasswordChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            onClick={togglePassword}
+                            area-label="toggle password"
+                            edge="end"
+                          >
+                            {passwordType === "password" ? (
+                              <VisibilityoffIcon />
+                            ) : (
+                              <VisibilityIcon />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
 
                   <Button
@@ -106,6 +192,25 @@ const Login = () => {
                     // sx={{ color: "red", background: "white" }}
                   >
                     Login Now
+                  </Button>
+                  <hr/>
+{/* 
+                  <div className="divider d-flex align-items-center my-4">
+                    <p className="text-center fw-bold mx-3 mb-0">Or</p>
+                  </div> */}
+
+                  <Button className=" w-100 " type="submit" variant="contained">
+                    <i className="fab fa-google me-2"></i>
+                    Sign in with Google
+                  </Button>
+
+                  <Button
+                    className=" w-100 mt-3"
+                    type="submit"
+                    variant="contained"
+                  >
+                    <i className="fab fa-facebook-f me-2"></i>
+                    Sign in with Facebook
                   </Button>
                 </form>
               )}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Navigationbar from './MainNavbar'
+import Navigationbar from './Navigationbar'
 
 const Main = () => {
   return (

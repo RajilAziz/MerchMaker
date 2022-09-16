@@ -3,6 +3,8 @@ import React from "react";
 import { Formik } from "formik";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
+import './Signup.css';
+import { NavLink } from "react-router-dom";
 
 const Signup = () => {
   // 1. Create a form object which should match with model fields
@@ -61,20 +63,15 @@ const Signup = () => {
 
   return (
 <div class="container py-5 ">
-  <div class="card" style={{height:""}}>
+  <div class="card" style={{width:"100%"}}>
     
-      <div class="row ">
-        <div class="col-md-6 col-sm-6 px-0">
-          {/* <div class="image"
-          style={{backgroundimage:"https://i.pinimg.com/564x/31/ac/f3/31acf39eebf9098564a41fd3e86e807e.jpg", height:"100vh"}}>
-            
-          </div> */}
-          <img 
-          style={{height:"99vh",margin:"0px"}}
-          class="img-fluid"
-          src="https://i.pinimg.com/564x/31/ac/f3/31acf39eebf9098564a41fd3e86e807e.jpg"/>
-        </div>
+      <div class="row 0-g">
+     
+      <div class="col-md-6 col-sm-6 quote-bg" id="img">
+        <div className="login-bg"></div>
        
+      </div>
+
         <div class="col-md-6 col-sm-6 "> 
         <div class="card-body">
           <h1 class="mt-5 mb-5">Signup Here</h1>
@@ -129,8 +126,12 @@ const Signup = () => {
             <Button type="submit" variant="contained">
               Signup
             </Button>
-            
-            <p>Already have account <a href="/user/login">Login Here</a></p>
+            <div class="loginpage "id="loginpage" >Already have account
+            <NavLink className="nav-link" to="/main/login">
+            <p id="loginpage" style={{display:"flex"}}>Login</p> 
+          </NavLink>
+          Here
+          </div>
           </form>
         )}
       </Formik>
