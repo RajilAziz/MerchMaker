@@ -15,7 +15,9 @@ const Customiser = () => {
     {
       name: "Sport Shoe",
       images: [
-        "images/Shoes.jpg"
+        "images/shoe600.png",
+        "images/shoe600.png",
+        "images/shoe600.png",
         // "https://assetscdn1.paytm.com/images/catalog/product/F/FO/FOOBRUNO-MANETTBRUN212022782A40D/1564608935172_1..jpg",
       ],
       price: 2500,
@@ -95,6 +97,8 @@ const Customiser = () => {
           img.set({
             left: 0,
             top: 0,
+            width: can.width,
+            height: can.height,
           });
           // img.scale();
           // objArr.push(img);
@@ -126,8 +130,7 @@ const Customiser = () => {
     console.log(mer);
     let objArr = [];
     mer.images.forEach((img) => {
-      addImage(img, can)
-      .then(img => objArr.push(img))
+      addImage(img, can).then((img) => objArr.push(img));
       console.log(objArr);
     });
     setTimeout(setImgObjects(objArr), 500);
@@ -483,8 +486,6 @@ const Customiser = () => {
   };
 
   const designOptions = () => {
-
-    
     return (
       <div className="card" style={{ overflow: "auto", height: "100%" }}>
         <div className="card-body">
@@ -534,7 +535,7 @@ const Customiser = () => {
               </div>
             </div>
           </div>
-          <div class="col-3">{designOptions()}</div>
+          <div class="col-3">{showSelImages()}</div>
         </div>
         <div class="">CUSTOMISER FOOTER</div>
       </div>
