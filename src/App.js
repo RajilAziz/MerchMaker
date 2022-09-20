@@ -16,6 +16,7 @@ import UserManager from "./components/main/UserManager";
 import User from "./components/user";
 import Customiser from "./components/user/Customiser";
 import Notfound from "./components/main/NotFound";
+import Userprofile from "./components/user/Userprofile";
 function App() {
   return (
     <div>
@@ -30,7 +31,7 @@ function App() {
             
             <Route path="resetpassword" element={<Resetpassword />} />
             <Route path="usermanager" element={<UserManager />} />
-            <Route element={<Notfound/>} />
+            <Route path="*" element={<Notfound/>} />
           </Route>
 
           <Route element={<Admin />} path="admin">
@@ -41,6 +42,7 @@ function App() {
 
           <Route element={<User />} path="user">
             <Route path="customiser" element={<Customiser />} />
+            <Route path="userprofile" element={<Userprofile/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,4 +1,10 @@
-import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
+import {
+  Button,
+  Divider,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
@@ -6,13 +12,10 @@ import * as Yup from "yup";
 import app_config from "../../config";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityoffIcon from "@mui/icons-material/VisibilityOff";
-import PersonIcon from '@mui/icons-material/Person';
-import "./Login.css"
+import PersonIcon from "@mui/icons-material/Person";
+import "./Login.css";
 
 const Login = () => {
-
-
-  
   // const [passwordType, setPasswordType] = useState("password")
   // const [passwordInput, setPasswordInput] = useState("")
   //  const handlePasswordChange=(e)=>{
@@ -53,6 +56,12 @@ const Login = () => {
   //     showPass: !values.showPass,
   //   });
   // };
+
+  let [authMode, setAuthMode] = useState("signin");
+
+  const changeAuthMode = () => {
+    setAuthMode(authMode === "signin" ? "signup" : "signin");
+  };
 
   const url = app_config.backend_url;
   const loginform = {
@@ -111,20 +120,6 @@ const Login = () => {
       <div className="col-md-4 col-sm-6 mx-auto my-auto">
         <div className="card " id="card">
           <div className="card-body">
-            {/* <img
-              style={{  }}
-              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            /> */}
-
-            {/* <div
-              style={{
-                background:
-                  "url(https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)",
-                height: "27rem",
-                width: "27rem",
-                backgroundPosition: "center",
-              }}
-            ></div> */}
             <h3 className="mt-4 mb-4" id="login">
               Login Here
             </h3>
@@ -144,16 +139,14 @@ const Login = () => {
                     id="username"
                     value={values.username}
                     onChange={handleChange}
-                    
-                    
                     InputProps={{
-                      endAdornment:(
+                      endAdornment: (
                         <InputAdornment position="end">
                           <IconButton edge="end">
-                            <PersonIcon/>
-                            </IconButton>
+                            <PersonIcon />
+                          </IconButton>
                         </InputAdornment>
-                      )
+                      ),
                     }}
                   />
 
@@ -186,18 +179,20 @@ const Login = () => {
 
                   <Button
                     type="submit"
-                    className="w-100 mt-3"
+                    className="w-100 mt-4"
                     variant="contained"
                     color="primary"
+
                     // sx={{ color: "red", background: "white" }}
                   >
                     Login Now
                   </Button>
-                  <hr/>
-{/* 
-                  <div className="divider d-flex align-items-center my-4">
-                    <p className="text-center fw-bold mx-3 mb-0">Or</p>
-                  </div> */}
+
+                  <Divider>
+                    <div className="d-flex justify-content-center align-items-center mb-3 mt-4">
+                      <h6 id="signupwith">Or Signup with</h6>
+                    </div>
+                  </Divider>
 
                   <Button className=" w-100 " type="submit" variant="contained">
                     <i className="fab fa-google me-2"></i>
@@ -205,13 +200,24 @@ const Login = () => {
                   </Button>
 
                   <Button
-                    className=" w-100 mt-3"
+                    className=" w-100 mt-4 mb-3"
                     type="submit"
                     variant="contained"
                   >
                     <i className="fab fa-facebook-f me-2"></i>
                     Sign in with Facebook
                   </Button>
+
+                  <p className="forgot-password text-right mt-2">
+                    Forgot <a href="#">password?</a>
+                  </p>
+
+                  <div className="">
+                    Not registered yet?{" "}
+                    <span className="link-primary" onClick={changeAuthMode}>
+                      Sign Up
+                    </span>
+                  </div>
                 </form>
               )}
             </Formik>
