@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import Swal from "sweetalert2";
 import * as Yup from 'yup';
 import './Signup.css';
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Signup = () => {
   // 1. Create a form object which should match with model fields
@@ -127,10 +127,8 @@ const Signup = () => {
               Signup
             </Button>
             <div class="loginpage "id="loginpage" >Already have account
-            <NavLink className="nav-link" to="/main/login">
-            <p id="loginpage" style={{display:"flex"}}>Login</p> 
-          </NavLink>
-          Here
+<Link to='/main/login'>Login Here</Link>
+         
           </div>
           </form>
         )}

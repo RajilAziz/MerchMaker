@@ -3,9 +3,11 @@ import {
   Divider,
   IconButton,
   InputAdornment,
+  // Link,
   TextField,
 } from "@mui/material";
 import { Formik } from "formik";
+import {Link} from 'react-router-dom'
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
@@ -209,15 +211,17 @@ const Login = () => {
                   </Button>
 
                   <p className="forgot-password text-right mt-2">
-                    Forgot <a href="#">password?</a>
+                    Forgot Password <Link to="/main/Resetpassword">Reset Here</Link>
                   </p>
-
-                  <div className="">
+                  <p>Don't have account
+                  <Link to='/main/signup'>Signup here</Link>
+                  </p>
+                  {/* <div className="">
                     Not registered yet?{" "}
                     <span className="link-primary" onClick={changeAuthMode}>
                       Sign Up
                     </span>
-                  </div>
+                  </div> */}
                 </form>
               )}
             </Formik>

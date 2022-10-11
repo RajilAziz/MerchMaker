@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Main from "./components/main";
 import Login from "./components/main/Login";
 import Signup from "./components/main/Signup";
@@ -17,21 +17,26 @@ import User from "./components/user";
 import Customiser from "./components/user/Customiser";
 import Notfound from "./components/main/NotFound";
 import Userprofile from "./components/user/Userprofile";
+import AddOrder from "./components/main/AddOrder";
+import CheckoutForm from "./components/main/CheckoutForm";
+import ProductListing from "./components/main/ProductListing";
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
+          <Route element={<Navigate to="/main/productlisting" />} path="/" />
           <Route element={<Main />} path="main">
-          <Route path="home" element={<Home />} />
+            <Route path="home" element={<Home />} />
             <Route element={<Login />} path="login" />
             <Route path="signup" element={<Signup />} />
-
+            <Route path="checkoutform" element={<CheckoutForm />} />
             <Route path="contact" element={<Contact />} />
-            
+            <Route path="addorder" element={<AddOrder />} />
             <Route path="resetpassword" element={<Resetpassword />} />
             <Route path="usermanager" element={<UserManager />} />
-            <Route path="*" element={<Notfound/>} />
+            <Route path="productlisting" element={<ProductListing />} />
+            <Route path="*" element={<Notfound />} />
           </Route>
 
           <Route element={<Admin />} path="admin">
@@ -41,8 +46,8 @@ function App() {
           </Route>
 
           <Route element={<User />} path="user">
-            <Route path="customiser" element={<Customiser />} />
-            <Route path="userprofile" element={<Userprofile/>}/>
+            <Route path="customiser/:merchname" element={<Customiser />} />
+            <Route path="userprofile" element={<Userprofile />} />
           </Route>
         </Routes>
       </BrowserRouter>

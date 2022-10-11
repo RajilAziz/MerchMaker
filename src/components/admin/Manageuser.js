@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react'
 
 const Manageuser = () => {
-  return <div>Manageuser</div>;
-};
+  return (
+    <div>Manageuser</div>
+  )
+}
 
-export default Manageuser;
+export default Manageuser

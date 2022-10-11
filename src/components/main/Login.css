@@ -14,28 +14,7 @@
   color: #2c4964;
 }
 
-#login::before {
-  content: "";
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  width: 120px;
-  height: 1px;
-  background: #ddd;
-  bottom: 80%;
-  /* left: calc(50% - 60px); */
-}
-#login::after {
-  content: "";
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  width: 40px;
-  height: 3px;
-  background: #1977cc;
-  bottom: 452px;
-  /* left: calc(50% - 20px); */
-}
+
 
 #signupwith{
   color: #2c4964;

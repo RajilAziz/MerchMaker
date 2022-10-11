@@ -4,6 +4,7 @@ import { fabric } from "fabric";
 import Swal from "sweetalert2";
 import app_config from "../../config";
 const Customiser = () => {
+  const {merchname}=useParams()
   const fonts = [
     "Tangerine",
     "Potta One",
