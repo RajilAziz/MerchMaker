@@ -4,13 +4,23 @@ import { fabric } from "fabric";
 import Swal from "sweetalert2";
 import app_config from "../../config";
 const Customiser = () => {
-  const {merchname}=useParams()
+  const { merchname } = useParams();
   const fonts = [
     "Tangerine",
     "Potta One",
     "Montserrat",
     "Anton",
     "Dancing Script",
+    "WireOne",
+    "Shrikhand",
+    "Sue Ellen Francisco",
+    "Special Elite",
+    "Sacramento",
+    "Caveat Brush",
+    "Ultra",
+    "Homemade Apple",
+    "Barrio",
+    "Libre Baskerville",
   ];
   const merchandise = [
     {
@@ -29,11 +39,11 @@ const Customiser = () => {
     {
       name: "color_filter",
       enabled: true,
-      image: "/features/color_filter.png",
+      image: "/features/draw.png",
     },
-    { name: "Add Text", enabled: false, image: "/features/add_text.png" },
-    { name: "stickers", enabled: false, image: "/features/sticker.png" },
-    { name: "Free Draw", enabled: false, image: "/features/free_draw.png" },
+    { name: "Add Text", enabled: false, image: "./features/draw.png" },
+    { name: "stickers", enabled: false, image: "./features/draw.png" },
+    { name: "Free Draw", enabled: false, image: "./features/draw.png" },
   ]);
 
   const [text, setText] = useState("");
@@ -77,8 +87,8 @@ const Customiser = () => {
 
   const initCanvas = () => {
     let can = new fabric.Canvas("editor", {
-      width: 600,
-      height: 600,
+      width: 700,
+      height: 700,
       // selectionColor: 'red',
       selectionLineWidth: 2,
       // isDrawingMode: true
@@ -140,6 +150,7 @@ const Customiser = () => {
 
   const toggleFeature = (index) => {
     let feat = features;
+
     feat.forEach((f) => (f.enabled = false));
     console.log(feat);
     setFeatures([...feat]);
@@ -151,8 +162,8 @@ const Customiser = () => {
     } else {
       canvas.isDrawingMode = false;
     }
-    console.log(canvas.isDrawingMode);
     setCanvas(canvas);
+    console.log(canvas.isDrawingMode);
   };
 
   const showSelFeature = () => {
@@ -457,12 +468,13 @@ const Customiser = () => {
   };
 
   const showFeatures = () => {
+    console.log(features);
     if (features !== undefined) {
       return features.map((feature, i) => (
         <div class="l-side-item">
           <img
             class="img-fluid"
-            src={url + "/images" + feature.image}
+            src={feature.image}
             alt=""
             onClick={(e) => toggleFeature(i)}
           />
@@ -539,6 +551,8 @@ const Customiser = () => {
           <div class="col-3">{showSelImages()}</div>
         </div>
         <div class="">CUSTOMISER FOOTER</div>
+        {showSelFeature()}
+        {/* <img src="./features/draw.png"/> */}
       </div>
     </div>
   );
