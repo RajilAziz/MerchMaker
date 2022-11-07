@@ -5,6 +5,8 @@ const api_config = require("./config")
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
+const stripe = require('stripe')('sk_test_tR3PYbcVNZZ796tH88S4VQ2u');
+
 const app = express();
 
 const port = api_config.port;
@@ -12,6 +14,25 @@ const port = api_config.port;
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: { origin: "http://localhost:3000" },
+});
+
+
+app.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price: '{{PRICE_ID}}',
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: `http://localhost:3000?success=true`,
+    cancel_url: `http://localhost:3000?canceled=true`,
+  });
+  console.log(session);
+
+  res.redirect(303, session.url);
 });
 
 //on function is used to recieve event

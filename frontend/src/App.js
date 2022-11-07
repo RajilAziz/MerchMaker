@@ -47,7 +47,7 @@ function App() {
           </Route>
 
           <Route element={<User />} path="user">
-            <Route path="customiser/:merchname" element={<Customiser />} />
+            <Route path="customiser/:merchindex" element={<Customiser />} />
             <Route path="userprofile" element={<Userprofile />} />
             <Route path="sidebar" element={<Sidebar/>}/>
           </Route>

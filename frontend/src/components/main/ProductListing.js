@@ -16,7 +16,8 @@ const ProductListing = () => {
     {
       title: "Sport Shoes",
       file: "Shoe_1",
-      price: "300",
+      category: 'cloths',
+      price: 300,
       thumbnail:
         "https://cdn.thewirecutter.com/wp-content/media/2021/02/whitesneakers-2048px-4197.jpg",
     },
@@ -48,7 +49,7 @@ const ProductListing = () => {
     
         <div className="row">
           {" "}
-          {productsList.map((prod) => (
+          {productsList.map((prod, index) => (
             <div className="col-md-3 mt-5">
               <div class="card" md={4}>
                 <div
@@ -67,12 +68,13 @@ const ProductListing = () => {
               </a> */}
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">Shoes</h5>
-                  <p class="card-text">{prod.title}</p>
+                  <h5 class="card-title">{prod.title}</h5>
+                  <p class="card-text">{prod.category}</p>
+                  <p class="card-text">{prod.price}</p>
 
                   <Link
-                    className="btn-5 btn btn-primary"
-                    to={"/user/customiser/" + prod.file}
+                    className="btn-5 btn btn-primary float-end"
+                    to={"/user/customiser/" + index}
                   >
                     Use This
                   </Link>
