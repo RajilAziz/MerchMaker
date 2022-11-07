@@ -4,7 +4,7 @@ import { fabric } from "fabric";
 import Swal from "sweetalert2";
 import app_config from "../../config";
 const Customiser = () => {
-  const { merchname } = useParams();
+  const { merchindex } = useParams();
   const fonts = [
     "Tangerine",
     "Potta One",
@@ -26,9 +26,9 @@ const Customiser = () => {
     {
       name: "Sport Shoe",
       images: [
-        "images/shoe600.png",
-        "images/shoe600.png",
-        "images/shoe600.png",
+        "images/comp1.png",
+        "images/showbackview.png",
+        "images/showsideview.png",
         // "https://assetscdn1.paytm.com/images/catalog/product/F/FO/FOOBRUNO-MANETTBRUN212022782A40D/1564608935172_1..jpg",
       ],
       price: 2500,
@@ -131,7 +131,7 @@ const Customiser = () => {
   };
 
   useEffect(() => {
-    let mer = merchandise.filter((m) => m.name === merch)[0];
+    let mer = merchandise.filter((m) => m.name === merch)[merchindex];
     console.log(mer);
     setSelectedMerch(mer);
 

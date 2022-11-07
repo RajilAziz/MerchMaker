@@ -31,9 +31,10 @@ const Main = () => {
   return (
 
     <div>
-      <Sidebar options={options} title={"sidebar"}>
+      {/* <Sidebar options={options} title={"sidebar"}>
+      </Sidebar> */}
+      
         <Outlet />
-      </Sidebar>
         </div>
   )
 }
