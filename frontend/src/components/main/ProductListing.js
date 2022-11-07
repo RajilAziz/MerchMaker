@@ -2,9 +2,16 @@ import React from "react";
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import { Link } from "react-router-dom";
+import Toolbar from '@mui/material/Toolbar';
+import { ClassNames } from "@emotion/react";
 
 const ProductListing = () => {
+  // root:{
+  //   paddingLeft:'240px'  
+  // }
   // const assets=[kids,Mugs,Shoe_1,Tshirts]
+// const classes = useStyles();
+
   const productsList = [
     {
       title: "Sport Shoes",
@@ -23,33 +30,33 @@ const ProductListing = () => {
       title: "Mugs",
       file: "Mugs",
       thumbnail:
-        "https://cdn.thewirecutter.com/wp-content/media/2021/02/whitesneakers-2048px-4197.jpg",
+        "https://m.media-amazon.com/images/I/81aozZ0C+QS._AC_SS450_.jpg",
     },
     {
       title: "Kids Wear",
       file: "Kids",
       thumbnail:
-        "https://cdn.thewirecutter.com/wp-content/media/2021/02/whitesneakers-2048px-4197.jpg",
+        "https://cdn.fcglcdn.com/brainbees/images/products/438x531/11113509a.webp",
     },
-
   ];
 
-
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#eee" }}>
+    // <div className={classes.root}
+    // style={{ minHeight: "100vh", backgroundColor: "#eee" }}>
+      
       <div className="container" spacing={5}>
+    
         <div className="row">
-          
-            {" "}
-            {productsList.map((prod) => (
-              <div className="col-md-3 mt-5">
+          {" "}
+          {productsList.map((prod) => (
+            <div className="col-md-3 mt-5">
               <div class="card" md={4}>
                 <div
                   class="bg-image hover-overlay ripple"
                   data-mdb-ripple-color="light"
                 >
                   <img
-                    src="https://cdn.thewirecutter.com/wp-content/media/2021/02/whitesneakers-2048px-4197.jpg"
+                    src={prod.thumbnail}
                     class="img-fluid"
                   />
                   {/* <a href="#!">
@@ -62,7 +69,7 @@ const ProductListing = () => {
                 <div class="card-body">
                   <h5 class="card-title">Shoes</h5>
                   <p class="card-text">{prod.title}</p>
-                  <p class="card-text">Product Detail</p>
+
                   <Link
                     className="btn-5 btn btn-primary"
                     to={"/user/customiser/" + prod.file}
@@ -72,17 +79,11 @@ const ProductListing = () => {
                 </div>
                 
               </div>
-              
-
-
-
-            
-          </div>)
-            )}
-          </div>
-       
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

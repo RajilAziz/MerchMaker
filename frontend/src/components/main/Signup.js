@@ -4,15 +4,16 @@ import { Formik } from "formik";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
 import "./Signup.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate()
   // 1. Create a form object which should match with model fields
   const userForm = {
     username: "",
     email: "",
     contact: "",
-    age: 0,
+  
     password: "",
   };
 
