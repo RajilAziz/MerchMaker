@@ -20,7 +20,7 @@ import Userprofile from "./components/user/Userprofile";
 import AddOrder from "./components/main/AddOrder";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
-import Checkout from "./components/user/Checkout";
+import Sidebar from "./components/user/Sidebar";
 function App() {
   return (
     <div>
@@ -49,7 +49,7 @@ function App() {
           <Route element={<User />} path="user">
             <Route path="customiser/:merchname" element={<Customiser />} />
             <Route path="userprofile" element={<Userprofile />} />
-            <Route path="checkout" element={<Checkout />} />
+            <Route path="sidebar" element={<Sidebar/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

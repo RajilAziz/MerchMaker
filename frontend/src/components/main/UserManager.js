@@ -59,7 +59,8 @@ const UserManager = () => {
           </div>
         </div>
       );
-    } else {
+    } 
+    else {
       return userArray.map(({ _id, email, password, username }) => (
         <tr key={_id}>
           <td>{username}</td>
