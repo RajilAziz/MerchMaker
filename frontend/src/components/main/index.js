@@ -1,10 +1,15 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Sidebar from './Sidebar';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
 
-import { AccountCircle, ManageAccounts, QueryStats, Dashboard } from "@mui/icons-material";
+import {
+  AccountCircle,
+  ManageAccounts,
+  QueryStats,
+  Dashboard,
+} from "@mui/icons-material";
+import Navbar from "./Navbar";
 const Main = () => {
-
   const options = [
     {
       name: "Profile",
@@ -29,14 +34,11 @@ const Main = () => {
   ];
 
   return (
-
     <div>
-      {/* <Sidebar options={options} title={"sidebar"}>
-      </Sidebar> */}
-      
-        <Outlet />
-        </div>
-  )
-}
+      <Navbar/>
+      <Outlet />
+    </div>
+  );
+};
 
-export default Main
+export default Main;

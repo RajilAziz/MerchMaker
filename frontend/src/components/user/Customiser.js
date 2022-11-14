@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fabric } from "fabric";
 import Swal from "sweetalert2";
 import app_config from "../../config";
+import './customizer.css';
+import { log } from "fabric/fabric-impl";
+
 const Customiser = () => {
   const { merchindex } = useParams();
+  const [selFeatureIndex, setSelFeatureIndex] = useState(null);
+  const [selImgIndex, setSelImgIndex] = useState(null);
+  const ref = useRef(null)
   const fonts = [
     "Tangerine",
     "Potta One",
@@ -24,12 +30,11 @@ const Customiser = () => {
   ];
   const merchandise = [
     {
-      name: "Sport Shoe",
+      name: "Round Neck T-Shirt",
       images: [
-        "images/comp1.png",
-        "images/showbackview.png",
-        "images/showsideview.png",
-        // "https://assetscdn1.paytm.com/images/catalog/product/F/FO/FOOBRUNO-MANETTBRUN212022782A40D/1564608935172_1..jpg",
+        "merch/tshirt01/main.png",
+        "merch/tshirt01/shoulder.png",
+        "merch/tshirt01/neck.png",
       ],
       price: 2500,
     },
@@ -39,10 +44,10 @@ const Customiser = () => {
     {
       name: "color_filter",
       enabled: true,
-      image: "/features/draw.png",
+      image: "features/dropper.png",
     },
-    { name: "Add Text", enabled: false, image: "./features/draw.png" },
-    { name: "stickers", enabled: false, image: "./features/draw.png" },
+    { name: "Add Text", enabled: false, image: "./features/logo.png" },
+    { name: "stickers", enabled: false, image: "./features/gallery.png" },
     { name: "Free Draw", enabled: false, image: "./features/draw.png" },
   ]);
 
@@ -75,6 +80,7 @@ const Customiser = () => {
   const max_zoom = 10;
   const [zoom, setZoom] = useState(null);
   const [finalImage, setFinalImage] = useState(null);
+  const [drawMode, setDrawMode] = useState(false);
 
   // const { merch } = useParams();
   const merch = "Sport Shoe";
@@ -87,12 +93,14 @@ const Customiser = () => {
 
   const initCanvas = () => {
     let can = new fabric.Canvas("editor", {
-      width: 700,
-      height: 700,
+      width: ref.current.clientWidth-50,
+      height: ref.current.clientHeight-50,
+      // isDrawingMode: true,
       // selectionColor: 'red',
       selectionLineWidth: 2,
-      // isDrawingMode: true
+      // isDrawingMode: drawMode
     });
+    // can.isDrawingMode = true;
     setZoom(can.getZoom());
     return can;
   };
@@ -104,19 +112,18 @@ const Customiser = () => {
       fabric.Image.fromURL(
         img_name,
         (img) => {
+          // console.log((can.height/img.height)*img.width);
           img.selectable = false;
           img.set({
-            left: 0,
+            left: can.width/2-((can.height/img.height)*img.width)/2,
             top: 0,
-            width: can.width,
-            height: can.height,
           });
-          // img.scale();
+          img.scaleToHeight(can.height);
           // objArr.push(img);
           // img_obj = img;
           resolve(img);
           can.add(img);
-          console.log(img);
+          // console.log(img);
           // setImgObjects([...imgObjects, img]);
           setSelObj(img);
         },
@@ -131,18 +138,19 @@ const Customiser = () => {
   };
 
   useEffect(() => {
-    let mer = merchandise.filter((m) => m.name === merch)[merchindex];
-    console.log(mer);
+    // let mer = merchandise.filter((m) => m.name === merch)[merchindex];
+    let mer = merchandise[merchindex];
+    // console.log(mer);
     setSelectedMerch(mer);
 
-    console.log(selectedMerch);
+    // console.log(selectedMerch);
     let can = initCanvas();
     setCanvas(can);
-    console.log(mer);
+    // console.log(mer);
     let objArr = [];
     mer.images.forEach((img) => {
       addImage(img, can).then((img) => objArr.push(img));
-      console.log(objArr);
+      // console.log(objArr);
     });
     setTimeout(setImgObjects(objArr), 500);
     // console.log(objArr);
@@ -150,20 +158,24 @@ const Customiser = () => {
 
   const toggleFeature = (index) => {
     let feat = features;
-
+    let can = canvas;
     feat.forEach((f) => (f.enabled = false));
-    console.log(feat);
+    // console.log(feat);
     setFeatures([...feat]);
     setSelFeature(features[index]);
-    console.log(features[index]);
+    // console.log(features[index]);
     if (features[index].name === "Free Draw") {
       console.log("free draw selected");
-      canvas.isDrawingMode = true;
+      can.isDrawingMode = true;
+      // setDrawMode(true);
     } else {
-      canvas.isDrawingMode = false;
+      // setDrawMode(false);
+      can.isDrawingMode = false;
     }
-    setCanvas(canvas);
-    console.log(canvas.isDrawingMode);
+    setCanvas(can);
+    console.log(canvas);
+    setSelFeatureIndex(index);
+    console.log(can.isDrawingMode);
   };
 
   const showSelFeature = () => {
@@ -311,12 +323,12 @@ const Customiser = () => {
   };
 
   const setZoomLevel = () => {
-    console.log(this.zoom_level * 0.1 + 1);
+    // console.log(this.zoom_level * 0.1 + 1);
     this.canvas.setZoom(this.zoom_level * 0.1 + 1);
   };
 
   const applyFilter = (img, col) => {
-    console.log(img);
+    // console.log(img);
     var filter = new fabric.Image.filters.BlendColor({
       color: col,
       mode: "tint",
@@ -334,7 +346,7 @@ const Customiser = () => {
   const setColor = (col) => {
     if (col === "default") {
       removeFilters(selObj);
-      console.log("removed");
+      // console.log("removed");
     } else {
       setSelColor(col);
       applyFilter(selObj, col);
@@ -384,11 +396,12 @@ const Customiser = () => {
   };
 
   const setObject = (index) => {
-    console.log(imgObjects);
+    // console.log(imgObjects);
     setSelObj(imgObjects[index]);
+    setSelImgIndex(index);
     // this.selected_object = this.img_objects[index];
-    console.log("selected ", index);
-    console.log(imgObjects[index]);
+    // console.log("selected ", index);
+    // console.log(imgObjects[index]);
   };
 
   const addPattern = (target) => {
@@ -426,12 +439,12 @@ const Customiser = () => {
   };
 
   const setPenWidth = (width) => {
-    console.log(width);
+    // console.log(width);
     this.canvas.freeDrawingBrush.width = width;
   };
 
   const setPenColor = (color) => {
-    console.log(color);
+    // console.log(color);
     canvas.freeDrawingBrush.color = color;
   };
 
@@ -468,16 +481,20 @@ const Customiser = () => {
   };
 
   const showFeatures = () => {
-    console.log(features);
+    // console.log(features);
     if (features !== undefined) {
       return features.map((feature, i) => (
-        <div class="l-side-item">
+        <div class={"card mb-3 "+(selFeatureIndex === i ? 'feature-active' : '')} onClick={(e) => toggleFeature(i)} style={{cursor: 'pointer'}}>
+          <div className="card-body">
           <img
             class="img-fluid"
             src={feature.image}
             alt=""
-            onClick={(e) => toggleFeature(i)}
           />
+        </div>
+        <div className="card-footer">
+            <p className="h6 mb-0">{feature.name}</p>
+        </div>
         </div>
       ));
     }
@@ -486,13 +503,10 @@ const Customiser = () => {
   const showSelImages = () => {
     if (selectedMerch !== null) {
       return selectedMerch.images.map((item, i) => (
-        <div class="r-side-item" onClick={(e) => setObject(i)}>
-          <img
-            class="img-fluid"
-            src={url + "/images" + item}
-            alt=""
-            crossorigin="anonymous"
-          />
+        <div class={"card mb-3 "+(selImgIndex === i ? 'feature-active': '') } onClick={(e) => setObject(i)}>
+          <div className="card-body">
+            <img class="img-fluid" src={item} alt="" crossorigin="anonymous" />
+          </div>
         </div>
       ));
     }
@@ -536,19 +550,18 @@ const Customiser = () => {
   };
 
   return (
-    <div class="section">
+    <div class="section vh-100" style={{ backgroundColor: "#ccc" }}>
       <div class="container-fluid">
-        <h3>CUSTOMISER HEADER</h3>
         <div class="row">
-          <div class="col-3">{showFeatures()}</div>
-          <div class="col-6">
-            <div class="card">
+          <div class="col-2 col-lg-1">{showFeatures()}</div>
+          <div class="col-8 col-lg-9" >
+            <div class="card" style={{minHeight: '80vh'}} ref={ref}>
               <div class="card-body">
                 <canvas id="editor" style={{ width: "100%" }}></canvas>
               </div>
             </div>
           </div>
-          <div class="col-3">{showSelImages()}</div>
+          <div class="col-2 col-lg-2">{showSelImages()}</div>
         </div>
         <div class="">CUSTOMISER FOOTER</div>
         {showSelFeature()}
