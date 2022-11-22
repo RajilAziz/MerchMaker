@@ -4,7 +4,6 @@ import { fabric } from "fabric";
 import Swal from "sweetalert2";
 import app_config from "../../config";
 import './customizer.css';
-import { log } from "fabric/fabric-impl";
 
 const Customiser = () => {
   const { merchindex } = useParams();
