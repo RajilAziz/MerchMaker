@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import UpdateUser from "./UpdateUsers";
+import UpdateUser from "../main/UpdateUsers";
 
 const UserManager = () => {
   const [userArray, setUserArray] = useState([]);
@@ -59,8 +59,7 @@ const UserManager = () => {
           </div>
         </div>
       );
-    } 
-    else {
+    } else {
       return userArray.map(({ _id, email, password, username }) => (
         <tr key={_id}>
           <td>{username}</td>
@@ -106,12 +105,15 @@ const UserManager = () => {
         </div>
         {showUpdateForm ? (
           <div className="col-md">
-            <UpdateUser updateFormData = {updateFormData} setShowUpdateForm={setShowUpdateForm} getDataFromBackend={getDataFromBackend} />
+            <UpdateUser
+              updateFormData={updateFormData}
+              setShowUpdateForm={setShowUpdateForm}
+              getDataFromBackend={getDataFromBackend}
+            />
           </div>
         ) : (
           ""
         )}
-
       </div>
     </div>
   );

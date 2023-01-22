@@ -4,7 +4,8 @@ import React from "react";
 const AddOrder = () => {
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      
+      <Card sx={{ maxWidth: 345 }} >
         <CardMedia
           component="img"
           image="https://cdn.thewirecutter.com/wp-content/media/2021/02/whitesneakers-2048px-4197.jpg"

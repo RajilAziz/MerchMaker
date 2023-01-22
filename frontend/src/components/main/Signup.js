@@ -36,7 +36,7 @@ const Signup = () => {
         text: "Registered successfully!!",
       });
       resetForm();
-      // navigate("/main/login");
+      navigate("/main/login");
     } else {
       console.log(response.status);
       console.log("something went wrong");

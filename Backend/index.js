@@ -5,8 +5,10 @@ const api_config = require("./config")
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
-const stripe = require('stripe')('sk_test_tR3PYbcVNZZ796tH88S4VQ2u');
+// const stripe = require('stripe')('sk_test_tR3PYbcVNZZ796tH88S4VQ2u');
 
+const stripe_sk="pk_test_51LojzRSH0DkD8It1V0m2Gisxfk8s3M6OYwwPyAMkwnwJ9rPkJJ6WznbKZk1ve89rc2GyZCyHh2N7q8PbwBiDoRdE00rtbPoOiI"
+const stripe=require("stripe")(stripe_sk)
 const app = express();
 
 const port = api_config.port;
@@ -72,6 +74,15 @@ app.use("/order",orderRouter)
 app.get("/home", (req, res) => {
   //route for process get reuest
   res.send("Hello Express!");
+});
+
+app.post("/create-payment-intent", async (req, res) => {
+  const data = req.body;
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: data.amount,
+    currency: "inr",
+  });
+  res.status(200).json(paymentIntent);
 });
 
 httpServer.listen(port, () => {

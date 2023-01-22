@@ -1,85 +1,156 @@
-import React from "react"
-import { Link, NavLink } from "react-router-dom"
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <>
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-md navbar-light bg-light">
-        {/* Container wrapper */}
-        <div className="container">
-          {/* Navbar brand */}
-          <a className="navbar-brand me-2" href="https://mdbgo.com/">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-              height={16}
-              alt="MDB Logo"
-              loading="lazy"
-              style={{ marginTop: "-1px" }}
-            />
-          </a>
-          {/* Toggle button */}
-          
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
           <button
-            className="navbar-toggler"
+            class="navbar-toggler"
             type="button"
             data-mdb-toggle="collapse"
-            data-mdb-target="#navbarButtonsExample"
-            aria-controls="navbarButtonsExample"
+            data-mdb-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation">
-            <i className="fas fa-bars" />
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
           </button>
-          {/* Collapsible wrapper */}
-          <div className="collapse navbar-collapse" id="navbarButtonsExample">
-            {/* Left links */}
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/home">
-                  Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/login">
-                  Login
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/event">
-                  Event Handling
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/state">
-                  State Manegement
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/chat">
-                  Chat
-                </NavLink>
-              </li>
-            </ul>
-            {/* Left links */}
-            <div className="d-flex align-items-center">
-              <button type="button" className="btn btn-link px-3 me-2">
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {/* <Link to="/main/home">
+              <img
+                src="https://cutewallpaper.org/cdn-cgi/mirage/dd19f2d06ebc24f541f142b37b4289ffa7de722a7607e39984c5c6dd4ce8defd/1280/24/p-logo-png/gallery-for-gt-letter-p-logo-design-free-p-logo-design-logo-design-free-graphic-design-logo.png"
+                alt="logo"
+                style={{ width: "15%" }}
+              />
+            </Link> */}
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+                Catalog
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+                Pricing
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+                Services
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
                 Login
-              </button>
-              <button type="button" className="btn btn-primary me-3">
-                Sign up for free
-              </button>
-              <a className="btn btn-dark px-3" href="https://github.com/mdbootstrap/mdb-ui-kit" role="button">
-                <i className="fab fa-github" />
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/logout">
+                Logout
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/checkoutform">
+                CheckoutForm
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/manageorder">
+                ManageOrder
+              </NavLink>
+            </li>
+            </ul>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <a class="text-reset me-3" href="#">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+
+            <div class="dropdown">
+              <a
+                class="text-reset me-3 dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fas fa-bell"></i>
+                <span class="badge rounded-pill badge-notification bg-danger">
+                  1
+                </span>
               </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                 <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+               #notification1
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+              #notification2
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+              #notification2
+              </NavLink>
+            </li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a
+                class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuAvatar"
+                role="button"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                  class="rounded-circle"
+                  height="25"
+                  alt="Black and White Portrait of a Man"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdownMenuAvatar"
+              >
+                 <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+              My Profile
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+              Account
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="login">
+              Setting
+              </NavLink>
+            </li>
+              </ul>
             </div>
           </div>
-          {/* Collapsible wrapper */}
         </div>
-        {/* Container wrapper */}
       </nav>
-      {/* Navbar */}
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default Navbar
+export default Navbar;
+

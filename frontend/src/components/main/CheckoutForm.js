@@ -1,225 +1,221 @@
-import { Card, CardContent, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
+import app_config from "../../config";
+import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
+  const [productData, setProductData] = useState(
+    JSON.parse(sessionStorage.getItem("product"))
+  );
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(sessionStorage.getItem("user"))
+  );
+  const url = app_config.apiurl;
+
+  const [isPaymentLoading, setPaymentLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const CARD_OPTIONS = {
+    iconStyle: "solid",
+    style: {
+      base: {
+        padding: "0.5rem",
+        iconColor: "#c4f0ff",
+        color: "#000",
+        fontWeight: 500,
+        fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+        fontSize: "16px",
+        fontSmoothing: "antialiased",
+        ":-webkit-autofill": {
+          color: "#fce883",
+        },
+        "::placeholder": {
+          color: "#87bbfd",
+        },
+      },
+      invalid: {
+        iconColor: "#ffc7ee",
+        color: "#ffc7ee",
+      },
+    },
+  };
+
+  const getIntent = () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: productData.sellPrice * 100 }),
+    };
+    return fetch(url + "/create-payment-intent", requestOptions).then(
+      (response) => response.json()
+    );
+  };
+
+  const payMoney = async (e) => {
+    e.preventDefault();
+    getIntent().then((res) => {
+      console.log(res);
+      let clientSecret = res.client_secret;
+
+      completePayment(clientSecret);
+    });
+  };
+
+  const completePayment = async (key) => {
+    const paymentResult = await stripe.confirmCardPayment(key, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: currentUser.name,
+        },
+      },
+    });
+
+    setPaymentLoading(false);
+    if (paymentResult.error) {
+      alert();
+      Swal.fire({
+        icon: "error",
+        title: "Payment Failed",
+        text: paymentResult.error.message,
+      });
+      console.log(paymentResult.error.message);
+    } else {
+      if (paymentResult.paymentIntent.status === "succeeded") {
+        console.log(paymentResult);
+
+        // saveOrder();
+        checkoutSubmit();
+      }
+    }
+  };
+
+  const checkoutSubmit = () => {
+    fetch(url + "/order/add", {
+      method: "POST",
+      body: JSON.stringify({
+        user: currentUser._id,
+        product: productData._id,
+        createdAt: new Date(),
+        type: "purchase",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res.status);
+      if (res.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Purchased Successfully",
+        });
+        navigate("/user/manageorders");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: "Purchase Failed",
+        });
+      }
+    });
+  };
+
   return (
-<div class="container">
-  <main>
-    <div class="py-5 text-center">
- 
-      <h2>Checkout form</h2>
-      <p class="lead"></p>
-    </div>
-
-    <div class="row g-5">
-      <div class="col-md-5 col-lg-4 order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Product name</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Second product</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Third item</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$5</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between bg-light">
-            <div class="text-success">
-              <h6 class="my-0">Promo code</h6>
-              <small>EXAMPLECODE</small>
-            </div>
-            <span class="text-success">−$5</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>$20</strong>
-          </li>
-        </ul>
-
-        <form class="card p-2">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Promo code"/>
-            <button type="submit" class="btn btn-secondary">Redeem</button>
-          </div>
-        </form>
-      </div>
-      <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Billing address</h4>
-        <form class="needs-validation" novalidate>
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required/>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required/>
-              <div class="invalid-feedback">
-                Valid last name is required.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="username" class="form-label">Username</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text">@</span>
-                <input type="text" class="form-control" id="username" placeholder="Username" required/>
-              <div class="invalid-feedback">
-                  Your username is required.
+    <div>
+      <section
+        className="p-4 p-md-5"
+        style={{
+          backgroundImage:
+            "url(https://img.freepik.com/free-vector/isometric-e-commerce-safety-payment_79603-997.jpg?w=2000)",
+        }}
+      >
+        <div className="row d-flex justify-content-center">
+          <div className="col-md-8 col-lg-8 col-xl-7">
+            <div className="card rounded-3">
+              <div className="card-body p-4">
+                <div className="text-center mb-4">
+                  <h3>Order Details</h3>
+                  <h6>Product</h6>
                 </div>
-              </div>
-            </div>
+                <hr />
 
-            <div class="col-12">
-              <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com"/>
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
-            </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label>
+                      <b>Product Title</b>
+                    </label>
+                    <h1 className="mb-3">{productData.title}</h1>
+                    <label>
+                      <b>Product Price</b>
+                    </label>
+                    <h3 className="mb-3">{productData.price}</h3>
+                    {/* <label>
+                      <b>Novel Publisher</b>
+                    </label> */}
+                    {/* <h3 className="mb-3">{productData.publisher}</h3> */}
+                    {/* <label>
+                      <b>Novel RentPrice</b>
+                    </label> */}
+                    {/* <h3 className="mb-3">{productData.rentPrice}</h3> */}
+                    <label>
+                      <b>Product SellPrice</b>
+                    </label>
+                    <h3 className="mb-3">{productData.sellPrice}</h3>
+                  </div>
+                  <div className="col-md-6">
+                    {/* img */}
+                    <img
+                      className="img-fluid w-100"
+                      src={url + "/" + productData.image}
+                      alt=""
+                    />
+                  </div>
+                </div>
 
-            <div class="col-12">
-              <label for="address" class="form-label">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required/>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite"/>
-            </div>
-
-            <div class="col-md-5">
-              <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country" required>
-                <option value="">Choose...</option>
-                <option>United States</option>
-              </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <label for="state" class="form-label">State</label>
-              <select class="form-select" id="state" required>
-                <option value="">Choose...</option>
-                <option>California</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required/>
-              <div class="invalid-feedback">
-                Zip code required.
+                <button className="btn btn-primary" onClick={checkoutSubmit}>
+                  Buy Now
+                </button>
               </div>
             </div>
           </div>
+          <div className="col-md-4 col-lg-4 col-xl-5">
+            <div className="card rounded-3">
+              <div className="card-body p-4">
+                <div className="text-center mb-4">
+                  <h3>Payment Details</h3>
+                  <h6>Payment</h6>
+                </div>
+                <form onSubmit={payMoney}>
+                  <CardElement className="card" options={CARD_OPTIONS} />
 
-          <hr class="my-4"/>
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address"/>
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info"/>
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-          </div>
-
-          <hr class="my-4"/>
-
-          <h4 class="mb-3">Payment</h4>
-
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required/>
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required/>
-              <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required/>
-              <label class="form-check-label" for="paypal">PayPal</label>
-            </div>
-          </div>
-
-          <div class="row gy-3">
-            <div class="col-md-6">
-              <label for="cc-name" class="form-label">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required/>
-              <small class="text-muted">Full name as displayed on card</small>
-              <div class="invalid-feedback">
-                Name on card is required
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <label for="cc-number" class="form-label">Credit card number</label>
-              <input type="text" class="form-control" id="cc-number" placeholder="" required/>
-              <div class="invalid-feedback">
-                Credit card number is required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-expiration" class="form-label">Expiration</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" required/>
-              <div class="invalid-feedback">
-                Expiration date required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-cvv" class="form-label">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required/>
-              <div class="invalid-feedback">
-                Security code required
+                  <button
+                    disabled={isPaymentLoading}
+                    className="btn btn-primary mt-5 w-100"
+                    type="submit"
+                  >
+                    {isPaymentLoading
+                      ? "Loading..."
+                      : `Pay ₹${productData.sellPrice}/-`}
+                  </button>
+                </form>
               </div>
             </div>
           </div>
-
-          <hr class="my-4"/>
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-        </form>
-      </div>
+        </div>
+      </section>
     </div>
-  </main>
-
-
-</div>
-
   );
 };
+
+<div className="manageorder-bg">
+  <div className="container">
+    <h1 className="text-center mb-5">ManageOrders</h1>
+  </div>
+</div>;
 
 export default CheckoutForm;
