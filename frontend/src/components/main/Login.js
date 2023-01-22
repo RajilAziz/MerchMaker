@@ -104,10 +104,7 @@ const Login = () => {
   };
 
   const formSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(2, "Too Short Username!")
-      .max(5, "Too Long Username!")
-      .required("Username is Required"),
+    
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string()
       .required("Required")
@@ -131,16 +128,18 @@ const Login = () => {
               onSubmit={loginSubmit}
               validationSchema={formSchema}
             >
-              {({ values, handleChange, handleSubmit }) => (
+              {({ values, handleChange, handleSubmit, errors, touched}) => (
                 <form onSubmit={handleSubmit}>
                   <TextField
                     variant="standard"
                     className="w-100 mt-3"
-                    label="Username"
-                    type="username"
-                    id="username"
-                    value={values.username}
+                    label="Email Address"
+                    type="email"
+                    id="email"
+                    value={values.email}
                     onChange={handleChange}
+                    error={Boolean(errors.email && touched.email)}
+                    helperText={touched.email ? errors.email : ""}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -158,8 +157,10 @@ const Login = () => {
                     label="Password"
                     type={passwordType}
                     id="password"
-                    value={passwordInput}
-                    onChange={handlePasswordChange}
+                    value={values.password}
+                    onChange={handleChange}
+                    error={Boolean(errors.password && touched.password)}
+                    helperText={touched.password ? errors.password : ""}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

@@ -1,7 +1,14 @@
-
-#hero{
-  background-color: beige;
-  /* background-attachment: fixed; */
-   
+.hero-bg {
+  background-image: url("https://miro.medium.com/max/1024/0*Cnrh1I4837nka_7I.jpg");
+  height: 500px;
+  background-size: cover;
+  background-position: top;
 }
 
+.random1 {
+  height: 30px;
+  margin-top: -30px;
+  transform: scale(2);
+  transform-origin: top center;
+  color: #fff;
+}

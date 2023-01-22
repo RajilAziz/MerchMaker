@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+        <div class="container">
           <button
             class="navbar-toggler"
             type="button"
@@ -19,13 +19,13 @@ const Navbar = () => {
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            {/* <Link to="/main/home">
+            <Link to="/main/home">
               <img
-                src="https://cutewallpaper.org/cdn-cgi/mirage/dd19f2d06ebc24f541f142b37b4289ffa7de722a7607e39984c5c6dd4ce8defd/1280/24/p-logo-png/gallery-for-gt-letter-p-logo-design-free-p-logo-design-logo-design-free-graphic-design-logo.png"
+                src={'logo.png'}
                 alt="logo"
-                style={{ width: "15%" }}
+                style={{ width: 40 }}
               />
-            </Link> */}
+            </Link>
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
