@@ -77,10 +77,7 @@ let [authMode, setAuthMode] = useState("signin");
   };
 
   const formSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(2, "Too Short Username!")
-      .max(5, "Too Long Username!")
-      .required("Username is Required"),
+    
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string()
       .required("Required")
