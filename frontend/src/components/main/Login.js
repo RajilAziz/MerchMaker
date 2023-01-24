@@ -18,21 +18,6 @@ import PersonIcon from "@mui/icons-material/Person";
 import "./Login.css";
 
 const Login = () => {
-  // const [passwordType, setPasswordType] = useState("password")
-  // const [passwordInput, setPasswordInput] = useState("")
-  //  const handlePasswordChange=(e)=>{
-  //   setPasswordInput(e.target.value);
-  //  }
-
-  //  const togglePassword=()=>{
-  //   if (password==="password")
-  //   {
-  //     setPasswordType("text")
-  //     return
-  //   }
-  //   setPasswordType("password")
-  //  }
-
   const [passwordType, setPasswordType] = useState("password");
   const [passwordInput, setPasswordInput] = useState("");
   const handlePasswordChange = (evnt) => {
@@ -46,20 +31,8 @@ const Login = () => {
     setPasswordType("password");
   };
 
-  // const [values, setValues] = useState({
-  //   email: "",
-  //   pass: "",
-  //   showPass: false,
-  // });
-
-  // const handlePassVisibility = () => {
-  //   setValues({
-  //     ...values,
-  //     showPass: !values.showPass,
-  //   });
-  // };
-
-  let [authMode, setAuthMode] = useState("signin");
+ 
+let [authMode, setAuthMode] = useState("signin");
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
@@ -104,7 +77,10 @@ const Login = () => {
   };
 
   const formSchema = Yup.object().shape({
-    
+    username: Yup.string()
+      .min(2, "Too Short Username!")
+      .max(5, "Too Long Username!")
+      .required("Username is Required"),
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string()
       .required("Required")
@@ -128,18 +104,16 @@ const Login = () => {
               onSubmit={loginSubmit}
               validationSchema={formSchema}
             >
-              {({ values, handleChange, handleSubmit, errors, touched}) => (
+              {({ values, handleChange, handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
                   <TextField
                     variant="standard"
                     className="w-100 mt-3"
-                    label="Email Address"
-                    type="email"
-                    id="email"
-                    value={values.email}
+                    label="Username"
+                    type="username"
+                    id="username"
+                    value={values.username}
                     onChange={handleChange}
-                    error={Boolean(errors.email && touched.email)}
-                    helperText={touched.email ? errors.email : ""}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -157,10 +131,8 @@ const Login = () => {
                     label="Password"
                     type={passwordType}
                     id="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    error={Boolean(errors.password && touched.password)}
-                    helperText={touched.password ? errors.password : ""}
+                    value={passwordInput}
+                    onChange={handlePasswordChange}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

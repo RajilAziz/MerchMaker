@@ -49,20 +49,41 @@ router.put('/update/:userid', (req, res) => {
   });
 });
 
+// router.post("/authenticate", (req, res) => {
+//   Model.findOne({ email: req.body.email, password: req.body.password })
+//     .then((userdata) => {
+//       if (userdata) {
+//         res.status(200).json(userdata);
+//       } else {
+//         res.status(300).json({ message: "Invalid Credentials" });
+//       }
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       res.json(err);
+//     });
+// });
+
 router.post("/authenticate", (req, res) => {
-  Model.findOne({ email: req.body.email, password: req.body.password })
+  // Model.findOne({ email: req.body.email, password: req.body.password })
+  Model.findOne({ email: req.body.email })
     .then((userdata) => {
       if (userdata) {
-        res.status(200).json(userdata);
+        if (bcrypt.compareSync(req.body.password, userdata.password))
+          res.json(userdata);
+        else {
+          res.status(401).json({ message: "Invalid Credentials" });
+        }
       } else {
-        res.status(300).json({ message: "Invalid Credentials" });
+        // if result is null
+        res.status(401).json({ status: "Login Failed" });
       }
     })
     .catch((err) => {
-      console.error(err);
+      console.log(err);
       res.json(err);
     });
-});
+  })
 
 router.get('/getall', (req, res) => {
   Model.find({})

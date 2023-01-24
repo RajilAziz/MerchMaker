@@ -24,6 +24,7 @@ import Sidebar from "./components/user/Sidebar";
 import Footer from "./components/main/Footer";
 import AboutUs from "./components/main/AboutUs";
 import ManageOrder from "./components/admin/ManageOrder";
+import SignIn from "./components/main/SignIn";
 function App() {
   return (
     <div>
@@ -42,6 +43,7 @@ function App() {
             <Route path="productlisting" element={<ProductListing />} />
             <Route path="footer" element={<Footer />} />
             <Route path="aboutus" element={<AboutUs />} />
+            <Route path="signin" element={<SignIn/>}/>
             <Route path="*" element={<Notfound />} />
           </Route>
 
