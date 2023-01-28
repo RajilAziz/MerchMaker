@@ -1,208 +1,275 @@
+import React, { useContext, useEffect, useState } from "react";
+import {
+  EmailOutlined,
+  Google,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
 import {
   Button,
-  Divider,
+  Checkbox,
+  FormControlLabel,
   IconButton,
   InputAdornment,
-  // Link,
   TextField,
 } from "@mui/material";
 import { Formik } from "formik";
-import {Link} from 'react-router-dom'
-import React, { useState } from "react";
-import Swal from "sweetalert2";
-import * as Yup from "yup";
 import app_config from "../../config";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityoffIcon from "@mui/icons-material/VisibilityOff";
-import PersonIcon from "@mui/icons-material/Person";
-import "./Login.css";
+import { UserContext } from "./../user/UserContext";
+import { Link, useNavigate } from "react-router-dom";
+import Image2 from "./../img/ab2.jpg";
+import jwt_decode from "jwt-decode";
+import Swal from "sweetalert2";
+const url = app_config.backend_url;
 
 const Login = () => {
-  const [passwordType, setPasswordType] = useState("password");
-  const [passwordInput, setPasswordInput] = useState("");
-  const handlePasswordChange = (evnt) => {
-    setPasswordInput(evnt.target.value);
-  };
-  const togglePassword = () => {
-    if (passwordType === "password") {
-      setPasswordType("text");
-      return;
-    }
-    setPasswordType("password");
+  const { setAvatar } = useContext(UserContext);
+
+  const handleSignOut = (event) => {
+    setUser({});
+    document.getElementById("signInDiv").hidden = false;
   };
 
- 
-let [authMode, setAuthMode] = useState("signin");
+  //Signin with google
+  const [user, setUser] = useState({});
+  const handleCallbackResponse = (response) => {
+    console.log("Encoded jwt id token:" + response.credential); //converted token into object
+    var userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    setUser(userObject);
+    setAvatar(userObject.picture);
 
-  const changeAuthMode = () => {
-    setAuthMode(authMode === "signin" ? "signup" : "signin");
+    //after signin the button of "sign in with google" hides
+    document.getElementById("signInDiv").hidden = true;
+    sessionStorage.setItem(
+      "user",
+      JSON.stringify({
+        username: userObject.name,
+        email: userObject.email,
+        avatar: userObject.picture,
+      })
+    );
   };
 
-  const url = app_config.backend_url;
+  const { setLoggedIn } = useContext(UserContext);
+  useEffect(() => {
+    Google.accounts.id.initialize({
+      client_id: "",
+      callback: handleCallbackResponse,
+    });
+    Google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+    Google.accounts.id.prompt();
+  }, []);
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   const loginform = {
     email: "",
     password: "",
   };
 
-  const loginSubmit = (formdata) => {
-    console.log("submit");
-    fetch(url + "/users/authenticate", {
+  const loginSubmit = async (formdata, { setSubmitting }) => {
+    console.log(formdata);
+    setSubmitting(true);
+    const response = await fetch(url + "/users/authenticate", {
       method: "POST",
-      body: JSON.stringify(formdata), //convert javascript to json
+      body: JSON.stringify(formdata),
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => {
-      if (res.status === 200) {
-        console.log("data saved");
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Login Success!!👍",
-        });
-
-        res.json().then((data) => {
-          console.log(data);
-
-          sessionStorage.setItem("user", JSON.stringify(data));
-        });
-      } else if (res.status === 400) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Login Failed!!👍",
-        });
-      }
     });
-  };
 
-  const formSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(2, "Too Short Username!")
-      .max(5, "Too Long Username!")
-      .required("Username is Required"),
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string()
-      .required("Required")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-      ),
-  });
+    if (response.status === 200) {
+      console.log(response.status);
+      console.log("success");
 
-  return (
-    <div className="section" style={{ marginTop: "8%", marginBottom: "10%" }}>
-      <div className="col-md-4 col-sm-6 mx-auto my-auto">
-        <div className="card " id="card">
-          <div className="card-body">
-            <h3 className="mt-4 mb-4" id="login">
-              Login Here
-            </h3>
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Login Success!!👍",
+      });
+      response.json().then((data) => {
+        console.log(data);
 
-            <Formik
-              initialValues={loginform}
-              onSubmit={loginSubmit}
-              validationSchema={formSchema}
-            >
-              {({ values, handleChange, handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <TextField
-                    variant="standard"
-                    className="w-100 mt-3"
-                    label="Username"
-                    type="username"
-                    id="username"
-                    value={values.username}
-                    onChange={handleChange}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton edge="end">
-                            <PersonIcon />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <TextField
-                    variant="standard"
-                    className="w-100 mt-3"
-                    label="Password"
-                    type={passwordType}
-                    id="password"
-                    value={passwordInput}
-                    onChange={handlePasswordChange}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={togglePassword}
-                            area-label="toggle password"
-                            edge="end"
-                          >
-                            {passwordType === "password" ? (
-                              <VisibilityoffIcon />
-                            ) : (
-                              <VisibilityIcon />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <Button
-                    type="submit"
-                    className="w-100 mt-4"
-                    variant="contained"
-                    color="primary"
-
-                    // sx={{ color: "red", background: "white" }}
-                  >
-                    Login Now
-                  </Button>
-
-                  <Divider>
-                    <div className="d-flex justify-content-center align-items-center mb-3 mt-4">
-                      <h6 id="signupwith">Or Signup with</h6>
+        setLoggedIn(true);
+        //for admin login
+        if (data.isAdmin) {
+          sessionStorage.setItem("admin", JSON.stringify(data));
+          navigate("/admin/");
+        } else {
+          navigate("/home");
+          sessionStorage.setItem("users", JSON.stringify(data));
+        }
+      });
+    } else if (response.status === 401) {
+      console.log(response.status);
+      console.log("something went wrong");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Invalid Credentials",
+      });
+      setSubmitting(false);
+    }
+    return (
+      <div id="login">
+        <section className="vh-100">
+          <div class="container  h-100">
+            <div class="row d-flex align-items-center justify-content-center h-100">
+              <div class="col col-xl-10">
+                <div class="card" style={{ borderRadius: "1rem " }}>
+                  <div class="row g-0">
+                    <div class="col-md-6 col-lg-7 col-xl-6">
+                      <img
+                        src={Image2}
+                        class="img-fluid"
+                        alt=""
+                        style={{
+                          borderRadius: "1rem 0 0 1rem",
+                          height: "100%",
+                        }}
+                      />
                     </div>
-                  </Divider>
+                    <div class="col-md-6 col-lg-5 col-xl-6">
+                      <div class="card-body p-lg-5 text-black">
+                        <h1 className="font-weight-bold">Sign In</h1>
+                        <Formik
+                          initialValues={loginform}
+                          onSubmit={loginSubmit}
+                        >
+                          {({
+                            values,
+                            handleChange,
+                            handleSubmit,
+                            isSubmitting,
+                          }) => (
+                            <form onSubmit={handleSubmit}>
+                              <div class="form-outline">
+                                <TextField
+                                  label="Email*"
+                                  variant="standard"
+                                  className="w-100 mb-4"
+                                  id="email"
+                                  // style={{ borderBottom: "0.1rem solid var(--secondary-color)"}}
+                                  InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <EmailOutlined />
+                                      </InputAdornment>
+                                    ),
+                                  }}
+                                  onChange={handleChange}
+                                  value={values.email}
+                                />
+                              </div>
+                              <div class="form-outline ">
+                                <TextField
+                                  label="Password*"
+                                  variant="standard"
+                                  className="w-100 mb-3"
+                                  id="password"
+                                  type={showPassword ? "text" : "password"}
+                                  InputProps={{
+                                    endAdornment: (
+                                      <InputAdornment position="end">
+                                        <IconButton
+                                          onClick={(e) =>
+                                            setShowPassword(!showPassword)
+                                          }
+                                        >
+                                          {showPassword ? (
+                                            <Visibility />
+                                          ) : (
+                                            <VisibilityOff />
+                                          )}
+                                        </IconButton>
+                                      </InputAdornment>
+                                    ),
+                                  }}
+                                  onChange={handleChange}
+                                  value={values.password}
+                                />
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center ">
+                                <div class="form-check">
+                                  <FormControlLabel
+                                    value="end"
+                                    control={<Checkbox />}
+                                    label="Remember me"
+                                    labelPlacement="end"
+                                  />
+                                </div>
+                           
+                                <Link class="small text-muted" to="/main/reset">
+                                  Forgot password?
+                                </Link>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center mb-4 ">
+                                <Button
+                                  disabled={isSubmitting}
+                                  type="submit"
+                                  variant="contained"
+                                  className=" btn btn-primary btn-lg btn-block"
+                                  style={{ width: "38%" }}
+                                >
+                                  Sign In
+                                </Button>
+                                <p
+                                  class="mt-4"
+                                  style={{ color: "#393f81", float: "right" }}
+                                >
+                                  I'm New User
+                                </p>
+                                <p class="mt-4" style={{ color: "#393f81" }}>
+                                  <Link to="/main/signup">Create Account</Link>
+                                </p>
+                              </div>
+                              <div className="d-flex justify-content-center align-items-center mb-1">
+                                <h6>Or Signup with</h6>
+                              </div>
 
-                  <Button className=" w-100 " type="submit" variant="contained">
-                    <i className="fab fa-google me-2"></i>
-                    Sign in with Google
-                  </Button>
+                              <div className="d-flex justify-content-center">
+                                <a
+                                  className="btn btn-outline-secondary btn-floating m-1"
+                                  href="#!"
+                                  role="button"
+                                  id="signInDiv"
+                                >
+                                  <i
+                                    className="fab fa-google"
+                                    style={{ marginLeft: "6px" }}
+                                  ></i>
+                                </a>
+                                {Object.keys(user).length !== 0 && (
+                                  <button onClick={(e) => handleSignOut(e)}>
+                                    Signout
+                                  </button>
+                                )}
 
-                  <Button
-                    className=" w-100 mt-4 mb-3"
-                    type="submit"
-                    variant="contained"
-                  >
-                    <i className="fab fa-facebook-f me-2"></i>
-                    Sign in with Facebook
-                  </Button>
-
-                  <p className="forgot-password text-right mt-2">
-                    Forgot Password <Link to="/main/Resetpassword">Reset Here</Link>
-                  </p>
-                  <p>Don't have account
-                  <Link to='/main/signup'>Signup here</Link>
-                  </p>
-                  {/* <div className="">
-                    Not registered yet?{" "}
-                    <span className="link-primary" onClick={changeAuthMode}>
-                      Sign Up
-                    </span>
-                  </div> */}
-                </form>
-              )}
-            </Formik>
+                                {user && (
+                                  <div>
+                                    <img src={user.picture} alt="" />
+                                    <h3>{user.name}</h3>
+                                  </div>
+                                )}
+                              </div>
+                            </form>
+                          )}
+                        </Formik>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
-  );
+    );
+  };
 };
 
 export default Login;
