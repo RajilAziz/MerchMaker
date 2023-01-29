@@ -11,7 +11,7 @@ const stripe_sk="pk_test_51LojzRSH0DkD8It1V0m2Gisxfk8s3M6OYwwPyAMkwnwJ9rPkJJ6Wzn
 const stripe=require("stripe")(stripe_sk)
 const app = express();
 
-const port = api_config.port;
+const port = process.env.PORT || api_config.port;
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
