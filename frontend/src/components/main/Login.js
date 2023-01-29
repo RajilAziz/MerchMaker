@@ -166,7 +166,7 @@ let [authMode, setAuthMode] = useState("signin");
                     </div>
                   </Divider>
 
-                  <Button className=" w-100 " type="submit" variant="contained">
+                  <Button className="w-100" type="submit" variant="contained">
                     <i className="fab fa-google me-2"></i>
                     Sign in with Google
                   </Button>
