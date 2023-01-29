@@ -24,6 +24,7 @@ import Swal from "sweetalert2";
 const url = app_config.backend_url;
 
 const Login = () => {
+<<<<<<< HEAD
   const { setAvatar } = useContext(UserContext);
 
   const handleSignOut = (event) => {
@@ -65,6 +66,10 @@ const Login = () => {
     });
     google.accounts.id.prompt();
   }, []);
+=======
+  const { setLoggedIn } = useContext(UserContext);
+  useEffect(() => {}, []);
+>>>>>>> adb01ebfd5dca91926ab875ac1c6682dd65902d9
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -102,8 +107,8 @@ const Login = () => {
           sessionStorage.setItem("admin", JSON.stringify(data));
           navigate("/admin/");
         } else {
-          navigate("/home");
-          sessionStorage.setItem("users", JSON.stringify(data));
+          navigate("/main/home");
+          sessionStorage.setItem("user", JSON.stringify(data));
         }
       });
     } else if (response.status === 401) {
@@ -116,6 +121,9 @@ const Login = () => {
       });
       setSubmitting(false);
     }
+  }
+
+
     return (
       <div id="login">
         <section className="vh-100">
@@ -204,7 +212,7 @@ const Login = () => {
                                     labelPlacement="end"
                                   />
                                 </div>
-                           
+
                                 <Link class="small text-muted" to="/main/reset">
                                   Forgot password?
                                 </Link>
@@ -245,18 +253,6 @@ const Login = () => {
                                     style={{ marginLeft: "6px" }}
                                   ></i>
                                 </a>
-                                {Object.keys(user).length !== 0 && (
-                                  <button onClick={(e) => handleSignOut(e)}>
-                                    Signout
-                                  </button>
-                                )}
-
-                                {user && (
-                                  <div>
-                                    <img src={user.picture} alt="" />
-                                    <h3>{user.name}</h3>
-                                  </div>
-                                )}
                               </div>
                             </form>
                           )}
@@ -272,6 +268,5 @@ const Login = () => {
       </div>
     );
   };
-};
 
 export default Login;
