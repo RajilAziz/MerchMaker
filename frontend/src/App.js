@@ -4,15 +4,12 @@ import Main from "./components/main";
 import Login from "./components/main/Login";
 import Signup from "./components/main/Signup";
 import Contact from "./components/main/Contact";
-
 import Home from "./components/main/Home";
 import Resetpassword from "./components/main/Resetpassword";
 import Dashboard from "./components/admin/Dashboard";
-
 import AdminProfile from "./components/admin/AdminProfile";
 import Admin from "./components/admin";
 import UserManager from "./components/main/UserManager";
-
 import User from "./components/user";
 import Customiser from "./components/user/Customiser";
 import Notfound from "./components/main/NotFound";
@@ -50,7 +47,6 @@ function App() {
           <Route element={<Admin />} path="admin">
             <Route path="manageorder" element={<ManageOrder />} />
             <Route path="dashboard" element={<Dashboard />} />
-          
             <Route path="profile" element={<AdminProfile />} />
           </Route>
 
