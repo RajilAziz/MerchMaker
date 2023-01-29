@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const usersRouter = require("./routers/usersRouter");
+const userRouter = require("./routers/userRouter");
 
 const contactRouter=require("./routers/contactRouter")
 
@@ -65,7 +65,7 @@ app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 
 //middlewares - to intercept request
-app.use("/users", usersRouter);
+app.use("/user", userRouter);
 
 app.use("/contact",contactRouter);
 

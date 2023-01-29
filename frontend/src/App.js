@@ -18,10 +18,10 @@ import AddOrder from "./components/main/AddOrder";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
 import Sidebar from "./components/user/Sidebar";
-import Footer from "./components/main/Footer";
+
 import AboutUs from "./components/main/AboutUs";
 import ManageOrder from "./components/admin/ManageOrder";
-import SignIn from "./components/main/SignIn";
+// import SignIn from "./components/main/SignIn";
 function App() {
   return (
     <div>
@@ -31,6 +31,7 @@ function App() {
           <Route element={<Main />} path="main">
             <Route path="home" element={<Home />} />
             <Route element={<Login />} path="login" />
+            {/* <Route path="signin" element={<SignIn/>}/> */}
             <Route path="signup" element={<Signup />} />
             <Route path="checkoutform" element={<CheckoutForm />} />
             <Route path="contact" element={<Contact />} />
@@ -38,9 +39,7 @@ function App() {
             <Route path="resetpassword" element={<Resetpassword />} />
             <Route path="usermanager" element={<UserManager />} />
             <Route path="productlisting" element={<ProductListing />} />
-            <Route path="footer" element={<Footer />} />
             <Route path="aboutus" element={<AboutUs />} />
-            <Route path="signin" element={<SignIn/>}/>
             <Route path="*" element={<Notfound />} />
           </Route>
 
@@ -56,7 +55,6 @@ function App() {
             <Route path="sidebar" element={<Sidebar />} />
           </Route>
         </Routes>
-        <Footer />
       </BrowserRouter>
     </div>
   );

@@ -13,7 +13,6 @@ const Signup = () => {
     username: "",
     email: "",
     contact: "",
-  
     password: "",
   };
 
@@ -36,7 +35,8 @@ const Signup = () => {
         text: "Registered successfully!!",
       });
       resetForm();
-      navigate("/main/login");
+      // navigate("/main/login");
+      navigate("/main/signin");
     } else {
       console.log(response.status);
       console.log("something went wrong");

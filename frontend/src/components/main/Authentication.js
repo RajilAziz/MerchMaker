@@ -14,7 +14,7 @@ const Authorisor = ({children}) => {
           title: "Oops!!",
           text: "You need to be logged in",
         });
-        return <Navigate to="/login" />;
+        return <Navigate to="/main/login" />;
       }
     
       return children;
