@@ -76,7 +76,7 @@ const Customiser = () => {
 
   const stickers = [
     // "/stickers/digipodium_w.png",
-    "/stickers/facebook.png",
+    "stickers/logo/club logo/580b57fcd9996e24bc43c4e7.png",
     "/stickers/google.png",
     "/stickers/monster.png",
     "/stickers/superman.png",
@@ -293,7 +293,7 @@ const Customiser = () => {
                     onClick={(e) => addSticker(sticker)}
                   >
                     <img
-                      src={url + "/images" + sticker}
+                      src={sticker}
                       alt=""
                       class="img-fluid"
                     />
@@ -442,7 +442,7 @@ const Customiser = () => {
 
   const setFont = (font) => {
     canvas.getActiveObject().set("fontFamily", font);
-    canvas.requestRenderAll();
+    // canvas.requestRenderAll();
     setCanvas(canvas);
   };
 
@@ -485,7 +485,7 @@ const Customiser = () => {
       })
     );
 
-    navigate("/main/checkout");
+    navigate("/user/checkout");
   };
 
   const showFeatures = () => {
@@ -561,7 +561,7 @@ const Customiser = () => {
   // };
 
   return (
-    <div class="section vh-100" style={{ backgroundColor: "#ccc" }}>
+    <div class="section" style={{ backgroundColor: "#ccc" }}>
       <div class="container-fluid">
         <div class="row">
           <div class="col-2 col-lg-1">{showFeatures()}</div>
@@ -576,6 +576,7 @@ const Customiser = () => {
         </div>
         <div class="">CUSTOMISER FOOTER</div>
         {showSelFeature()}
+        <button className="btn btn-primary" onClick={finalize}>Checkout</button>
         {/* <img src="./features/draw.png"/> */}
       </div>
     </div>

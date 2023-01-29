@@ -16,37 +16,37 @@ router.post("/add", (req, res) => {
     });
 });
 
-
-router.get('/getbyid/:userid', (req, res) => {
-    
-  Model.findById( req.params.userid )
-  .then((result) => {
+router.get("/getbyid/:userid", (req, res) => {
+  Model.findById(req.params.userid)
+    .then((result) => {
       res.json(result);
-  }).catch((err) => {
+    })
+    .catch((err) => {
       console.error(err);
       res.json(err);
-  });
-})
+    });
+});
 
-
-router.delete('/delete/:userid', (req, res) => {
-  Model.findByIdAndDelete( req.params.userid )
-  .then((result) => {
+router.delete("/delete/:userid", (req, res) => {
+  Model.findByIdAndDelete(req.params.userid)
+    .then((result) => {
       res.json(result);
-  }).catch((err) => {
+    })
+    .catch((err) => {
       console.error(err);
       res.json(err);
-  });
-})
+    });
+});
 
-router.put('/update/:userid', (req, res) => {
-  Model.findByIdAndUpdate(req.params.userid, req.body, {new : true})
-  .then((result) => {
+router.put("/update/:userid", (req, res) => {
+  Model.findByIdAndUpdate(req.params.userid, req.body, { new: true })
+    .then((result) => {
       res.json(result);
-  }).catch((err) => {
+    })
+    .catch((err) => {
       console.error(err);
       res.json(err);
-  });
+    });
 });
 
 // router.post("/authenticate", (req, res) => {
@@ -66,35 +66,31 @@ router.put('/update/:userid', (req, res) => {
 
 router.post("/authenticate", (req, res) => {
   // Model.findOne({ email: req.body.email, password: req.body.password })
-  Model.findOne({ email: req.body.email })
+  Model.findOne(req.body)
     .then((userdata) => {
       if (userdata) {
-        if (bcrypt.compareSync(req.body.password, userdata.password))
-          res.json(userdata);
-        else {
-          res.status(401).json({ message: "Invalid Credentials" });
-        }
+        res.json(userdata);
       } else {
-        // if result is null
-        res.status(401).json({ status: "Login Failed" });
+        res.status(401).json({ message: "Invalid Credentials" });
       }
     })
     .catch((err) => {
       console.log(err);
       res.json(err);
     });
-  })
+});
 
-router.get('/getall', (req, res) => {
+router.get("/getall", (req, res) => {
   Model.find({})
-  .then((result) => {
+    .then((result) => {
       console.log(result);
-      res.json(result);        
-  }).catch((err) => {
+      res.json(result);
+    })
+    .catch((err) => {
       console.error(err);
       res.json(err);
-  });
+    });
   //res.send('get all from user router')
-})
+});
 
 module.exports = router;

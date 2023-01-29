@@ -23,46 +23,8 @@ import Swal from "sweetalert2";
 const url = app_config.backend_url;
 
 const Login = () => {
-  const { setAvatar } = useContext(UserContext);
-
-  const handleSignOut = (event) => {
-    setUser({});
-    document.getElementById("signInDiv").hidden = false;
-  };
-
-  //Signin with google
-  const [user, setUser] = useState({});
-  const handleCallbackResponse = (response) => {
-    console.log("Encoded jwt id token:" + response.credential); //converted token into object
-    var userObject = jwt_decode(response.credential);
-    console.log(userObject);
-    setUser(userObject);
-    setAvatar(userObject.picture);
-
-    //after signin the button of "sign in with google" hides
-    document.getElementById("signInDiv").hidden = true;
-    sessionStorage.setItem(
-      "user",
-      JSON.stringify({
-        username: userObject.name,
-        email: userObject.email,
-        avatar: userObject.picture,
-      })
-    );
-  };
-
   const { setLoggedIn } = useContext(UserContext);
-  useEffect(() => {
-    Google.accounts.id.initialize({
-      client_id: "",
-      callback: handleCallbackResponse,
-    });
-    Google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-    });
-    Google.accounts.id.prompt();
-  }, []);
+  useEffect(() => {}, []);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -100,8 +62,8 @@ const Login = () => {
           sessionStorage.setItem("admin", JSON.stringify(data));
           navigate("/admin/");
         } else {
-          navigate("/home");
-          sessionStorage.setItem("users", JSON.stringify(data));
+          navigate("/main/home");
+          sessionStorage.setItem("user", JSON.stringify(data));
         }
       });
     } else if (response.status === 401) {
@@ -114,6 +76,9 @@ const Login = () => {
       });
       setSubmitting(false);
     }
+  }
+
+
     return (
       <div id="login">
         <section className="vh-100">
@@ -202,7 +167,7 @@ const Login = () => {
                                     labelPlacement="end"
                                   />
                                 </div>
-                           
+
                                 <Link class="small text-muted" to="/main/reset">
                                   Forgot password?
                                 </Link>
@@ -243,18 +208,6 @@ const Login = () => {
                                     style={{ marginLeft: "6px" }}
                                   ></i>
                                 </a>
-                                {Object.keys(user).length !== 0 && (
-                                  <button onClick={(e) => handleSignOut(e)}>
-                                    Signout
-                                  </button>
-                                )}
-
-                                {user && (
-                                  <div>
-                                    <img src={user.picture} alt="" />
-                                    <h3>{user.name}</h3>
-                                  </div>
-                                )}
                               </div>
                             </form>
                           )}
@@ -270,6 +223,5 @@ const Login = () => {
       </div>
     );
   };
-};
 
 export default Login;
