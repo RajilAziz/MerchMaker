@@ -5,6 +5,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { Button, TextareaAutosize, TextField } from "@mui/material";
 import { Formik } from "formik";
 import Swal from "sweetalert2";
+import SendIcon from '@mui/icons-material/Send';
 import "./Contact.css";
 // import * as Yup from 'yup';
 const Contact = () => {
@@ -15,7 +16,7 @@ const Contact = () => {
     message: "",
   };
 
-  const contactSubmit = (formdata , {resetForm}) => {
+  const contactSubmit = (formdata, { resetForm }) => {
     fetch("http://localhost:5000/contact/add", {
       method: "POST",
       body: JSON.stringify(formdata), //convert javascript to json
@@ -38,11 +39,8 @@ const Contact = () => {
             sessionStorage.setItem("user", JSON.stringify(data));
           });
 
-          resetForm()
-
-        } 
-        
-        else if (res.status === 400) {
+          resetForm();
+        } else if (res.status === 400) {
           Swal.fire({
             icon: "error",
             title: "Error",
@@ -137,6 +135,9 @@ const Contact = () => {
                               <br />
                               +1 6678 254445 41
                             </p>
+                            <Button variant="contained" endIcon={<SendIcon />}>
+                              Send
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -220,7 +221,6 @@ const Contact = () => {
                       }) => (
                         <form onSubmit={handleSubmit}>
                           <TextField
-                            
                             label="Your Name"
                             variant="outlined"
                             className="w-100 mb-4"
@@ -262,7 +262,6 @@ const Contact = () => {
                             helperText={touched.message ? errors.message : ""}
                             error={Boolean(errors.message && touched.message)}
                           />
-
 
                           <Button
                             type="submit"

@@ -1,4 +1,4 @@
-const Model = require("../models/usersModel");
+const Model = require("../models/userModel");
 const router = require("express").Router();
 
 router.post("/add", (req, res) => {

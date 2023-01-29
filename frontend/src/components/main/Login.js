@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   EmailOutlined,
-  Google,
+ 
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
@@ -20,11 +20,56 @@ import { Link, useNavigate } from "react-router-dom";
 import Image2 from "./../img/ab2.jpg";
 import jwt_decode from "jwt-decode";
 import Swal from "sweetalert2";
+
 const url = app_config.backend_url;
 
 const Login = () => {
+<<<<<<< HEAD
+  const { setAvatar } = useContext(UserContext);
+
+  const handleSignOut = (event) => {
+    setUser({});
+    document.getElementById("signInDiv").hidden = false;
+  };
+     
+  //Signin with google
+  const [user, setUser] = useState({});
+  
+  const handleCallbackResponse = (response) => {
+    console.log("Encoded jwt id token:" + response.credential); //converted token into object
+    var userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    setUser(userObject);
+    setAvatar(userObject.picture);
+
+    //after signin the button of "sign in with google" hides
+    document.getElementById("signInDiv").hidden = true;
+    sessionStorage.setItem(
+      "user",
+      JSON.stringify({
+        username: userObject.name,
+        email: userObject.email,
+        avatar: userObject.picture,
+      })
+    );
+  };
+
+  const { setLoggedIn } = useContext(UserContext);
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id: "957603757952-lsjdsdnv0uccocpggk2p6e9f20jtuq0v.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+    google.accounts.id.prompt();
+  }, []);
+=======
   const { setLoggedIn } = useContext(UserContext);
   useEffect(() => {}, []);
+>>>>>>> adb01ebfd5dca91926ab875ac1c6682dd65902d9
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -36,7 +81,7 @@ const Login = () => {
   const loginSubmit = async (formdata, { setSubmitting }) => {
     console.log(formdata);
     setSubmitting(true);
-    const response = await fetch(url + "/users/authenticate", {
+    const response = await fetch(url + "/user/authenticate", {
       method: "POST",
       body: JSON.stringify(formdata),
       headers: {

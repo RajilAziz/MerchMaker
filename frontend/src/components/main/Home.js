@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import app_config from "../../config";
+import Footer from "./Footer"
 import "./home.css";
 
 const Home = () => {
@@ -197,7 +198,9 @@ const Home = () => {
           </section>
         </section>
       </div>
+      <Footer/>
     </div>
+   
   );
 };
 

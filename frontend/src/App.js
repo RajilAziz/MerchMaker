@@ -18,9 +18,32 @@ import AddOrder from "./components/main/AddOrder";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
 import Sidebar from "./components/user/Sidebar";
-import Footer from "./components/main/Footer";
+
 import AboutUs from "./components/main/AboutUs";
 import ManageOrder from "./components/admin/ManageOrder";
+<<<<<<< HEAD
+// import SignIn from "./components/main/SignIn";
+function App() {
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Navigate to="/main/home" />} path="/" />
+          <Route element={<Main />} path="main">
+            <Route path="home" element={<Home />} />
+            <Route element={<Login />} path="login" />
+            {/* <Route path="signin" element={<SignIn/>}/> */}
+            <Route path="signup" element={<Signup />} />
+            <Route path="checkoutform" element={<CheckoutForm />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="addorder" element={<AddOrder />} />
+            <Route path="resetpassword" element={<Resetpassword />} />
+            <Route path="usermanager" element={<UserManager />} />
+            <Route path="productlisting" element={<ProductListing />} />
+            <Route path="aboutus" element={<AboutUs />} />
+            <Route path="*" element={<Notfound />} />
+          </Route>
+=======
 import SignIn from "./components/main/SignIn";
 import { UserProvider } from "./components/user/UserContext";
 import Authorisor from "./components/user/AuthUser";
@@ -46,6 +69,7 @@ function App() {
               {/* <Route path="signin" element={<SignIn />} /> */}
               <Route path="*" element={<Notfound />} />
             </Route>
+>>>>>>> adb01ebfd5dca91926ab875ac1c6682dd65902d9
 
             <Route element={<Admin />} path="admin">
               <Route path="manageorder" element={<ManageOrder />} />
@@ -53,6 +77,15 @@ function App() {
               <Route path="profile" element={<AdminProfile />} />
             </Route>
 
+<<<<<<< HEAD
+          <Route element={<User />} path="user">
+            <Route path="customiser/:merchindex" element={<Customiser />} />
+            <Route path="userprofile" element={<Userprofile />} />
+            <Route path="sidebar" element={<Sidebar />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+=======
             <Route element={<Authorisor ><User /></Authorisor>} path="user">
               <Route path="customiser/:merchindex" element={<Customiser />} />
               <Route path="userprofile" element={<Userprofile />} />
@@ -63,6 +96,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       </UserProvider>
+>>>>>>> adb01ebfd5dca91926ab875ac1c6682dd65902d9
     </div>
   );
 }
