@@ -18,7 +18,6 @@ import AddOrder from "./components/main/AddOrder";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
 
-
 import AboutUs from "./components/main/AboutUs";
 import ManageOrder from "./components/admin/ManageOrder";
 
@@ -28,8 +27,14 @@ import Footer from "./components/main/Footer";
 import Navbar from "./components/main/Navbar";
 import Navigationbar from "./components/user/Navigationbar";
 import UserProfile1 from "./components/main/UserProfile1";
-import Sidebar from "./components/main/Sidebar";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
 function App() {
+  const stripe = loadStripe(
+    "pk_test_51MJCFESFzM9nsxSsupwtB39lFhJbHf7fPlbVVnyPezOli9SUNVnuDm5ixKKhGg5On2nfz3udpKaplEMd0D9canPU00aq5Zv6UH"
+  );
+
   return (
     <div>
       <UserProvider>
@@ -48,7 +53,6 @@ function App() {
               <Route path="productlisting" element={<ProductListing />} />
               <Route path="footer" element={<Footer />} />
               <Route path="aboutus" element={<AboutUs />} />
-              <Route path="userprofile1" element={<UserProfile1 />} />
               <Route path="*" element={<Notfound />} />
             </Route>
 
@@ -68,12 +72,19 @@ function App() {
             >
               <Route path="customiser/:merchindex" element={<Customiser />} />
               <Route path="userprofile" element={<Userprofile />} />
-              
-              <Route path="sidebar" element={<Sidebar />} />
-              <Route path="checkout" element={<CheckoutForm />} />
+              <Route path="userprofile1" element={<UserProfile1 />} />
+              {/* <Route path="sidebar" element={<Sidebar />} /> */}
+              <Route
+                path="checkout"
+                element={
+                  <Elements stripe={stripe}>
+                    <CheckoutForm />
+                  </Elements>
+                }
+              />
               <Route path="navigationbar" element={<Navigationbar />} />
             </Route>
-            <Route path="navbar" element={<Navbar/>}/>
+            <Route path="navbar" element={<Navbar />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

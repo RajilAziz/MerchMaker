@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const CheckoutForm = () => {
   const [productData, setProductData] = useState(
-    JSON.parse(sessionStorage.getItem("product"))
+    JSON.parse(sessionStorage.getItem("merchData"))
   );
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(sessionStorage.getItem("user"))
