@@ -28,6 +28,7 @@ import Footer from "./components/main/Footer";
 import Navbar from "./components/main/Navbar";
 import Navigationbar from "./components/user/Navigationbar";
 import UserProfile1 from "./components/main/UserProfile1";
+import Sidebar from "./components/main/Sidebar";
 function App() {
   return (
     <div>
@@ -47,7 +48,7 @@ function App() {
               <Route path="productlisting" element={<ProductListing />} />
               <Route path="footer" element={<Footer />} />
               <Route path="aboutus" element={<AboutUs />} />
-             
+              <Route path="userprofile1" element={<UserProfile1 />} />
               <Route path="*" element={<Notfound />} />
             </Route>
 
@@ -67,8 +68,8 @@ function App() {
             >
               <Route path="customiser/:merchindex" element={<Customiser />} />
               <Route path="userprofile" element={<Userprofile />} />
-              <Route path="userprofile1" element={<UserProfile1 />} />
-              {/* <Route path="sidebar" element={<Sidebar />} /> */}
+              
+              <Route path="sidebar" element={<Sidebar />} />
               <Route path="checkout" element={<CheckoutForm />} />
               <Route path="navigationbar" element={<Navigationbar />} />
             </Route>
