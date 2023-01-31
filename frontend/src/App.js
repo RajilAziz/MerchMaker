@@ -14,7 +14,6 @@ import User from "./components/user";
 import Customiser from "./components/user/Customiser";
 import Notfound from "./components/main/NotFound";
 import Userprofile from "./components/user/Userprofile";
-import AddOrder from "./components/main/AddOrder";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
 
@@ -32,7 +31,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
   const stripe = loadStripe(
-    "pk_test_51MJCFESFzM9nsxSsupwtB39lFhJbHf7fPlbVVnyPezOli9SUNVnuDm5ixKKhGg5On2nfz3udpKaplEMd0D9canPU00aq5Zv6UH"
+    "pk_test_51LojzRSH0DkD8It1V0m2Gisxfk8s3M6OYwwPyAMkwnwJ9rPkJJ6WznbKZk1ve89rc2GyZCyHh2N7q8PbwBiDoRdE00rtbPoOiI"
   );
 
   return (
@@ -47,7 +46,6 @@ function App() {
               <Route path="signup" element={<Signup />} />
               <Route path="checkoutform" element={<CheckoutForm />} />
               <Route path="contact" element={<Contact />} />
-              <Route path="addorder" element={<AddOrder />} />
               <Route path="resetpassword" element={<Resetpassword />} />
               <Route path="usermanager" element={<UserManager />} />
               <Route path="productlisting" element={<ProductListing />} />
@@ -84,7 +82,6 @@ function App() {
               />
               <Route path="navigationbar" element={<Navigationbar />} />
             </Route>
-            <Route path="navbar" element={<Navbar />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

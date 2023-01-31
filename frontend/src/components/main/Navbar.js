@@ -289,7 +289,7 @@ const Navbar = () => {
               }}
             >
               {pages.map(({ name, link }) => (
-                <MenuItem key={name} onClick={(e) => navigate(link)}>
+                <MenuItem style={{ color: "#fff"}} key={name} onClick={(e) => navigate(link)}>
                   <Typography textAlign="center">{name}</Typography>
                 </MenuItem>
               ))}
