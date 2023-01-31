@@ -17,31 +17,39 @@ import Userprofile from "./components/user/Userprofile";
 import AddOrder from "./components/main/AddOrder";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
-import Sidebar from "./components/user/Sidebar";
+
 
 import AboutUs from "./components/main/AboutUs";
 import ManageOrder from "./components/admin/ManageOrder";
-// import SignIn from "./components/main/SignIn";
+
+import { UserProvider } from "./components/user/UserContext";
+import Authorisor from "./components/user/AuthUser";
+import Footer from "./components/main/Footer";
+import Navbar from "./components/main/Navbar";
+import Navigationbar from "./components/user/Navigationbar";
+import UserProfile1 from "./components/main/UserProfile1";
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Navigate to="/main/home" />} path="/" />
-          <Route element={<Main />} path="main">
-            <Route path="home" element={<Home />} />
-            <Route element={<Login />} path="login" />
-            {/* <Route path="signin" element={<SignIn/>}/> */}
-            <Route path="signup" element={<Signup />} />
-            <Route path="checkoutform" element={<CheckoutForm />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="addorder" element={<AddOrder />} />
-            <Route path="resetpassword" element={<Resetpassword />} />
-            <Route path="usermanager" element={<UserManager />} />
-            <Route path="productlisting" element={<ProductListing />} />
-            <Route path="aboutus" element={<AboutUs />} />
-            <Route path="*" element={<Notfound />} />
-          </Route>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Navigate to="/main/home" />} path="/" />
+            <Route element={<Main />} path="main">
+              <Route path="home" element={<Home />} />
+              <Route element={<Login />} path="signin" />
+              <Route path="signup" element={<Signup />} />
+              <Route path="checkoutform" element={<CheckoutForm />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="addorder" element={<AddOrder />} />
+              <Route path="resetpassword" element={<Resetpassword />} />
+              <Route path="usermanager" element={<UserManager />} />
+              <Route path="productlisting" element={<ProductListing />} />
+              <Route path="footer" element={<Footer />} />
+              <Route path="aboutus" element={<AboutUs />} />
+             
+              <Route path="*" element={<Notfound />} />
+            </Route>
 
             <Route element={<Admin />} path="admin">
               <Route path="manageorder" element={<ManageOrder />} />
@@ -49,13 +57,25 @@ function App() {
               <Route path="profile" element={<AdminProfile />} />
             </Route>
 
-          <Route element={<User />} path="user">
-            <Route path="customiser/:merchindex" element={<Customiser />} />
-            <Route path="userprofile" element={<Userprofile />} />
-            <Route path="sidebar" element={<Sidebar />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route
+              element={
+                <Authorisor>
+                  <User />
+                </Authorisor>
+              }
+              path="user"
+            >
+              <Route path="customiser/:merchindex" element={<Customiser />} />
+              <Route path="userprofile" element={<Userprofile />} />
+              <Route path="userprofile1" element={<UserProfile1 />} />
+              {/* <Route path="sidebar" element={<Sidebar />} /> */}
+              <Route path="checkout" element={<CheckoutForm />} />
+              <Route path="navigationbar" element={<Navigationbar />} />
+            </Route>
+            <Route path="navbar" element={<Navbar/>}/>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </div>
   );
 }
