@@ -464,7 +464,8 @@ const Customiser = () => {
       });
       return;
     }
-    let merchData = JSON.parse(sessionStorage.getItem("selectedMerch"));
+    // let merchData = JSON.parse(sessionStorage.getItem("selectedMerch"));
+    sessionStorage.setItem("merchData", JSON.stringify(selectedMerch));
 
     let merchImageName = "finalMerch_" + new Date().toString();
     const img = new Image();
