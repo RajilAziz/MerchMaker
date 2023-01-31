@@ -17,14 +17,17 @@ import Userprofile from "./components/user/Userprofile";
 import AddOrder from "./components/main/AddOrder";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
-import Sidebar from "./components/user/Sidebar";
+
 
 import AboutUs from "./components/main/AboutUs";
 import ManageOrder from "./components/admin/ManageOrder";
-import SignIn from "./components/main/SignIn";
+
 import { UserProvider } from "./components/user/UserContext";
 import Authorisor from "./components/user/AuthUser";
 import Footer from "./components/main/Footer";
+import Navbar from "./components/main/Navbar";
+import Navigationbar from "./components/user/Navigationbar";
+import UserProfile1 from "./components/main/UserProfile1";
 function App() {
   return (
     <div>
@@ -44,7 +47,7 @@ function App() {
               <Route path="productlisting" element={<ProductListing />} />
               <Route path="footer" element={<Footer />} />
               <Route path="aboutus" element={<AboutUs />} />
-              {/* <Route path="signin" element={<SignIn />} /> */}
+             
               <Route path="*" element={<Notfound />} />
             </Route>
 
@@ -54,14 +57,23 @@ function App() {
               <Route path="profile" element={<AdminProfile />} />
             </Route>
 
-            <Route element={<Authorisor ><User /></Authorisor>} path="user">
+            <Route
+              element={
+                <Authorisor>
+                  <User />
+                </Authorisor>
+              }
+              path="user"
+            >
               <Route path="customiser/:merchindex" element={<Customiser />} />
               <Route path="userprofile" element={<Userprofile />} />
-              <Route path="sidebar" element={<Sidebar />} />
+              <Route path="userprofile1" element={<UserProfile1 />} />
+              {/* <Route path="sidebar" element={<Sidebar />} /> */}
               <Route path="checkout" element={<CheckoutForm />} />
+              <Route path="navigationbar" element={<Navigationbar />} />
             </Route>
+            <Route path="navbar" element={<Navbar/>}/>
           </Routes>
-          <Footer />
         </BrowserRouter>
       </UserProvider>
     </div>

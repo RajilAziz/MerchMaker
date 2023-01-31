@@ -20,7 +20,7 @@ const Signup = () => {
 
   const userSubmit = async (formdata, { resetForm }) => {
     console.log(formdata);
-    const response = await fetch("http://localhost:5000/users/add", {
+    const response = await fetch("http://localhost:5000/user/add", {
       method: "POST",
       body: JSON.stringify(formdata),
       headers: { "Content-Type": "application/json" },

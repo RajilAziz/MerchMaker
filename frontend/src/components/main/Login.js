@@ -17,8 +17,8 @@ import { Formik } from "formik";
 import app_config from "../../config";
 import { UserContext } from "./../user/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-import Image2 from "./../img/ab2.jpg";
-import jwt_decode from "jwt-decode";
+import Image2 from "./../img/ab2.webp";
+
 import Swal from "sweetalert2";
 
 const url = app_config.backend_url;
@@ -159,15 +159,15 @@ const Login = () => {
                                   value={values.password}
                                 />
                               </div>
-                              <div className="d-flex justify-content-between align-items-center ">
-                                <div class="form-check">
+                              <div className="d-flex justify-content-between align-items-center mb-4">
+                                {/* <div class="form-check"> */}
                                   <FormControlLabel
                                     value="end"
                                     control={<Checkbox />}
                                     label="Remember me"
                                     labelPlacement="end"
                                   />
-                                </div>
+                                {/* </div> */}
 
                                 <Link class="small text-muted" to="/main/reset">
                                   Forgot password?
@@ -179,21 +179,31 @@ const Login = () => {
                                   type="submit"
                                   variant="contained"
                                   className=" btn btn-primary btn-lg btn-block"
-                                  style={{ width: "38%" }}
+                                  style={{ width: "100%" }}
                                 >
                                   Sign In
                                 </Button>
-                                <p
+                                </div>
+                                {/* <p
                                   class="mt-4"
                                   style={{ color: "#393f81", float: "right" }}
                                 >
-                                  I'm New User
+                                  Have no account ?
                                 </p>
                                 <p class="mt-4" style={{ color: "#393f81" }}>
                                   <Link to="/main/signup">Create Account</Link>
-                                </p>
-                              </div>
-                              <div className="d-flex justify-content-center align-items-center mb-1">
+                                </p> */}
+                                <div>
+                            <p
+                              // class="mt-4"
+                              style={{ color: "#000000", marginRight: "5%" }}
+                            >
+                              Have no account ?{" "}
+                              <Link to="/main/signup">Signup</Link>
+                            </p>
+                          </div>
+                              
+                              {/* <div className="d-flex justify-content-center align-items-center mb-1">
                                 <h6>Or Signup with</h6>
                               </div>
 
@@ -209,7 +219,7 @@ const Login = () => {
                                     style={{ marginLeft: "6px" }}
                                   ></i>
                                 </a>
-                              </div>
+                              </div> */}
                             </form>
                           )}
                         </Formik>
