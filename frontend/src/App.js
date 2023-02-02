@@ -52,6 +52,7 @@ function App() {
               <Route path="footer" element={<Footer />} />
               <Route path="aboutus" element={<AboutUs />} />
               <Route path="*" element={<Notfound />} />
+              <Route path="userprofile1" element={<UserProfile1 />} />
             </Route>
 
             <Route element={<Admin />} path="admin">
@@ -70,7 +71,7 @@ function App() {
             >
               <Route path="customiser/:merchindex" element={<Customiser />} />
               <Route path="userprofile" element={<Userprofile />} />
-              <Route path="userprofile1" element={<UserProfile1 />} />
+              
               {/* <Route path="sidebar" element={<Sidebar />} /> */}
               <Route
                 path="checkout"

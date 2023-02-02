@@ -14,7 +14,7 @@ const UserManager = () => {
   const getDataFromBackend = async () => {
     setLoading(true);
 
-    const response = await fetch("http://localhost:5000/users/getall");
+    const response = await fetch("http://localhost:5000/user/getall");
     const data = await response.json();
 
     console.log(data);

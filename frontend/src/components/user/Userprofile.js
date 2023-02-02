@@ -170,6 +170,7 @@ const Userprofile = () => {
     //   }
     // });
   };
+
   return (
     <div>
       <section style={{ backgroundcolor: "#eee" }}>
@@ -207,158 +208,103 @@ const Userprofile = () => {
                     {({ values, handleChange, handleSubmit, isSubmitting }) => (
                       <form onSubmit={handleSubmit}>
                         {/* <div className="card"> */}
-                          {/* <div className="card-header">
-                            <h4 className="mb-0">Account Settings</h4>
-                            <p className="text-sm mb-0">
-                              Here you can change your account information
-                            </p>
-                          </div> */}
-                          <div className="card-body">
-                            <div className="row mb-3 d-flex align-items-center justify-content-center">
-                            <div>
-                                  {" "}
-                                  <h4 className="mb-0">Account Settings</h4>
-                                  <p className="text-sm mb-0">
-                                    Here you can change your account information
-                                  </p>
-                                </div>
-                              <div className="col-md-6">
-                                {/* <div>
-                                  {" "}
-                                  <h4 className="mb-0">Account Settings</h4>
-                                  <p className="text-sm mb-0">
-                                    Here you can change your account information
-                                  </p>
-                                </div> */}
+                        <div className="card-header">
+                          <h4 className="mb-0">Account Settings</h4>
+                          <p className="text-sm mb-0">
+                            Here you can change your account information
+                          </p>
+                        </div>
+                        <div className="card-body">
+                          <div className="row mb-3 d-flex align-items-center justify-content-center">
+                            <div className="col-md-6">
+                              <div
+                                className="fileupload fileupload-new "
+                                data-provides="fileupload"
+                              >
+                                <div className="photo-container d-flex align-items-center justify-content-center">
+                                  {/* {url+'/'+currentUser.avatar} */}
 
-                                <div
-                                  className="fileupload fileupload-new "
-                                  data-provides="fileupload"
-                                >
-                                  <div className="photo-container d-flex align-items-center justify-content-center">
-                                    {/* {url+'/'+currentUser.avatar} */}
-
-                                    <Badge
-                                      overlap="circular"
-                                      anchorOrigin={{
-                                        vertical: "bottom",
-                                        horizontal: "right",
-                                      }}
-                                      badgeContent={
-                                        <IconButton
-                                          color="primary"
-                                          aria-label="upload picture"
-                                          component="label"
-                                        >
-                                          <input
-                                            hidden
-                                            accept="image/*"
-                                            type="file"
-                                            onChange={uploadThumbnail}
-                                          />
-                                          <PhotoCamera />
-                                        </IconButton>
+                                  <Badge
+                                    overlap="circular"
+                                    anchorOrigin={{
+                                      vertical: "bottom",
+                                      horizontal: "right",
+                                    }}
+                                    badgeContent={
+                                      <IconButton
+                                        color="primary"
+                                        aria-label="upload picture"
+                                        component="label"
+                                      >
+                                        <input
+                                          hidden
+                                          accept="image/*"
+                                          type="file"
+                                          onChange={uploadThumbnail}
+                                        />
+                                        <PhotoCamera />
+                                      </IconButton>
+                                    }
+                                  >
+                                    <Avatar
+                                      src={
+                                        currentUser.avatar
+                                          ? url + "/" + currentUser.avatar
+                                          : previewUrl
                                       }
-                                    >
-                                      <Avatar
-                                        src={
-                                          currentUser.avatar
-                                            ? url + "/" + currentUser.avatar
-                                            : previewUrl
-                                        }
-                                        sx={{ width: 150, height: 150 }}
-                                      />
-                                    </Badge>
-                                  </div>
+                                      sx={{ width: 150, height: 150 }}
+                                    />
+                                  </Badge>
                                 </div>
                               </div>
                             </div>
-                            <div className="d-flex align-items-center justify-content-center">
-                              <Tooltip title="Remove">
-                                <Button
-                                  variant="contained"
-                                  color="error"
-                                  startIcon={<DeleteIcon />}
-                                >
-                                  Remove
-                                </Button>
-                              </Tooltip>
-                            </div>
-
-                            <TextField
-                              className="mt-4 w-100"
-                              label="Full Name"
-                              variant="filled"
-                              name="username"
-                              onChange={handleChange}
-                              value={values.username}
-                            />
-
-                            <TextField
-                              className="mt-4 w-100"
-                              label="Email"
-                              variant="filled"
-                              name="email"
-                              onChange={handleChange}
-                              value={values.email}
-                            />
                           </div>
-                          <Button type="submit" variant="contained">
-                            Update
-                          </Button>
+
+                          <TextField
+                            className="mt-4 w-100"
+                            label="Full Name"
+                            variant="filled"
+                            name="username"
+                            onChange={handleChange}
+                            value={values.username}
+                          />
+
+
+
+                          <TextField
+                            className="mt-4 w-100"
+                            label="Email"
+                            variant="filled"
+                            name="email"
+                            onChange={handleChange}
+                            value={values.email}
+                          />
+                        </div>
+
+                        <div className="d-flex align-items-center justify-content-center">
+                          <Tooltip title="Remove">
+                            <Button
+                              variant="contained"
+                              color="error"
+                              startIcon={<DeleteIcon />}
+                            >
+                              Remove
+                            </Button>
+                          </Tooltip>
+                          <Tooltip title="Update">
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              className="ms-2"
+                            >
+                              Update
+                            </Button>
+                          </Tooltip>
+                        </div>
                         {/* </div> */}
                       </form>
                     )}
                   </Formik>
-                  {/* <h5 class="my-3">John Smith</h5>
-              <p class="text-muted mb-1">Full Stack Developer</p>
-              <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
-                  <div class="d-flex justify-content-center mb-2">
-                    <button type="button" class="btn btn-primary">
-                      Follow
-                    </button>
-                    <button type="button" class="btn btn-outline-primary ms-1">
-                      Message
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="card mb-4 mb-lg-0">
-                <div class="card-body p-0">
-                  <ul class="list-group list-group-flush rounded-3">
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <i class="fas fa-globe fa-lg text-warning"></i>
-                      <p class="mb-0">https://mdbootstrap.com</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <i
-                        class="fab fa-github fa-lg"
-                        style={{ color: "#333333" }}
-                      ></i>
-                      <p class="mb-0">mdbootstrap</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <i
-                        class="fab fa-twitter fa-lg"
-                        style={{ color: "#55acee" }}
-                      ></i>
-                      <p class="mb-0">@mdbootstrap</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <i
-                        class="fab fa-instagram fa-lg"
-                        style={{ color: "#ac2bac" }}
-                      ></i>
-                      <p class="mb-0">mdbootstrap</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <i
-                        class="fab fa-facebook-f fa-lg"
-                        style={{ color: "#3b5998" }}
-                      ></i>
-                      <p class="mb-0">mdbootstrap</p>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
@@ -383,15 +329,7 @@ const Userprofile = () => {
                     </div>
                   </div>
                   <hr />
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <p class="mb-0">Phone</p>
-                    </div>
-                    <div class="col-sm-9">
-                      <p class="text-muted mb-0">(097) 234-5678</p>
-                    </div>
-                  </div>
-                  <hr />
+
                   <div class="row">
                     <div class="col-sm-3">
                       <p class="mb-0">Mobile</p>
@@ -412,184 +350,53 @@ const Userprofile = () => {
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-12">
                   <div class="card mb-4 mb-md-0">
                     <div class="card-body">
-                      <p class="mb-4">
-                        <span class="text-primary font-italic me-1">
-                          assigment
-                        </span>{" "}
-                        Project Status
-                      </p>
-                      <p class="mb-1" style={{ fontsize: ".77rem" }}>
-                        Web Design
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "80%",
-                            ariavaluenow: "80",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        Website Markup
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "72%",
-                            ariavaluenow: "72",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        One Page
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "89%",
-                            ariavaluenow: "89",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        Mobile Template
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "55%",
-                            ariavaluenow: "55",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        {" "}
-                        Backend API
-                      </p>
-                      <div
-                        class="progress rounded mb-2"
-                        style={{ height: "5px" }}
-                      >
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "66%",
-                            ariavaluenow: "66",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="card mb-4 mb-md-0">
-                    <div class="card-body">
-                      <p class="mb-4">
-                        <span class="text-primary font-italic me-1">
-                          assigment
-                        </span>{" "}
-                        Project Status
-                      </p>
-                      <p class="mb-1" style={{ fontsize: ".77rem" }}>
-                        Web Design
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "80%",
-                            ariavaluenow: "80",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        Website Markup
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "72%",
-                            ariavaluenow: "72",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        One Page
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "89%",
-                            ariavaluenow: "89",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        Mobile Template
-                      </p>
-                      <div class="progress rounded" style={{ height: "5px" }}>
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "55%",
-                            ariavaluenow: "55",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
-                      <p class="mt-4 mb-1" style={{ fontsize: ".77rem" }}>
-                        Backend API
-                      </p>
-                      <div
-                        class="progress rounded mb-2"
-                        style={{ height: "5px" }}
-                      >
-                        <div
-                          class="progress-bar"
-                          role="progressbar"
-                          style={{
-                            width: "66%",
-                            ariavaluenow: "66",
-                            ariavaluemin: "0",
-                            ariavaluemax: "100",
-                          }}
-                        ></div>
-                      </div>
+                      <ul class="list-group list-group-flush rounded-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <i
+                            class="fab fa-github fa-lg"
+                            style={{ color: "#333333" }}
+                          ></i>
+                          <p class="mb-0"></p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <i
+                            class="fab fa-twitter fa-lg"
+                            style={{ color: "#55acee" }}
+                          ></i>
+                          <p class="mb-0"></p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <i
+                            class="fab fa-instagram fa-lg"
+                            style={{ color: "#ac2bac" }}
+                          ></i>
+                          <p class="mb-0"></p>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                          <div className="input-group">
+                            {/* <i
+                            class="fab fa-facebook-f fa-lg"
+                            style={{ color: "#3b5998" }}
+                          ></i> */}
+                            <span className="input-group-text">
+                              <i
+                                class="fab fa-facebook-f fa-lg"
+                                style={{ color: "#3b5998" }}
+                              ></i>
+                            </span>
+                            <input
+                              className="form-control"
+                              placeholder="Username"
+                              type="text"
+                              name="user[facebook_username]"
+                              id="user_facebook_username"
+                            />
+                          </div>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
