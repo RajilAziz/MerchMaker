@@ -22,11 +22,11 @@ const UserManager = () => {
     setLoading(false);
   };
 
-  const updateUser = (user) => {
-    console.log(user);
-    setUpdateFormData(user);
-    setShowUpdateForm(true);
-  };
+  // const updateUser = (user) => {
+  //   console.log(user);
+  //   setUpdateFormData(user);
+  //   setShowUpdateForm(true);
+  // };
 
   const deleteUser = async (id) => {
     console.log(id);
@@ -62,10 +62,11 @@ const UserManager = () => {
     } else {
       return userArray.map(({ _id, email, password, username }) => (
         <tr key={_id}>
+          <td>{_id}</td>
           <td>{username}</td>
           <td>{email}</td>
           <td>{password}</td>
-          <td>
+          {/* <td>
             <button
               className="btn btn-primary"
               onClick={(e) => updateUser({ _id, email, password, username })}
@@ -73,7 +74,7 @@ const UserManager = () => {
               {" "}
               <i class="fas fa-pencil"></i>{" "}
             </button>
-          </td>
+          </td> */}
           <td>
             <button className="btn btn-danger" onClick={(e) => deleteUser(_id)}>
               <i class="fas fa-trash"></i>
@@ -93,11 +94,13 @@ const UserManager = () => {
           <table className="table table-dark">
             <thead>
               <tr>
+                <th>Id</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Password</th>
+                <th>Actions</th>
                 <th></th>
-                <th></th>
+                
               </tr>
             </thead>
             <tbody>{displayUsers()}</tbody>

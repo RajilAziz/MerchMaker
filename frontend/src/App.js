@@ -16,7 +16,7 @@ import Notfound from "./components/main/NotFound";
 import Userprofile from "./components/user/Userprofile";
 import CheckoutForm from "./components/main/CheckoutForm";
 import ProductListing from "./components/main/ProductListing";
-
+import ManageUser from "./components/main/ManageUser"
 import AboutUs from "./components/main/AboutUs";
 import ManageOrder from "./components/admin/ManageOrder";
 
@@ -28,6 +28,7 @@ import Navigationbar from "./components/user/Navigationbar";
 import UserProfile1 from "./components/main/UserProfile1";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import AdminNavbar from "./components/admin/AdminNavbar";
 
 function App() {
   const stripe = loadStripe(
@@ -53,12 +54,14 @@ function App() {
               <Route path="aboutus" element={<AboutUs />} />
               <Route path="*" element={<Notfound />} />
               <Route path="userprofile1" element={<UserProfile1 />} />
+              <Route path="manageuser" element={<ManageUser/>} />
             </Route>
 
             <Route element={<Admin />} path="admin">
               <Route path="manageorder" element={<ManageOrder />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="profile" element={<AdminProfile />} />
+              <Route path="adminnavbar" element={<AdminNavbar />} />
             </Route>
 
             <Route
